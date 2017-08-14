@@ -7,6 +7,8 @@ struct college_info
 	char college_name[30];
 	char person_name[20];
 	char phone_number[20];
+	float total_donate;
+	int total_student;
 
 	struct college_info* next;
 	struct class_info* class_head;
@@ -18,6 +20,8 @@ struct  class_info
 	int person_number;
 	char college_name[30];
 	char counselor[30];
+	float total_donate;
+	int total_student;
 
 	struct class_info* next;
 	struct student_info* student_head;
@@ -60,10 +64,19 @@ int college_length(struct college_info* head);
 int class_length(struct class_info* head);
 int student_length(struct student_info* head);
 //count
-float class_total(struct class_info* head);
-float college_total(struct college* head);
+void class_donate_total(struct class_info* head);
+void college_donate_total(struct college_info* head);
+void donate_total(struct college_info* head);
+void class_student_total(struct class_info* head);
+void college_student_total(struct college_info* head);
+void student_total(struct college_info* head);
 //sort
-
+void college_donate_sort(struct college_info* head);
+void class_donate_sort(struct class_info* head);
+void college_student_sort(struct college_info* head);
+void class_student_sort(struct class_info* head);
+void sort_donate_all(struct college_info* head);
+void sort_student_all(struct college_info* head);
 #endif
 
 
