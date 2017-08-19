@@ -410,7 +410,7 @@ struct college_info* insert_student(struct college_info* head, int nco, int ncl,
 	scanf("%c",&student_new->gender);
 	printf("Please input age: \n");
 	scanf("%d",&student_new->age);
-	printf("Please input money: \n")
+	printf("Please input money: \n");
 	scanf("%f",&student_new->money);
 	student_new->next =  student_temp->next;
 	student_temp->next = student_new;
