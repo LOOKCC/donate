@@ -26,7 +26,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    int now_index;
+    int now_index[3];
     struct college_info* head;
 private slots:
     void Mouse_position(QTreeWidgetItem* item);
