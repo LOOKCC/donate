@@ -293,8 +293,48 @@ void MainWindow::Sort_donate(){
     sort_donate_all(head);
 }
 void MainWindow::More_than(){
+    struct college_info* temp_college = head;
+    while(temp_college != NULL){
+        struct class_info* temp_class = temp_college->class_head;
+        while(temp_class != NULL){
+            struct student_info* temp_student = temp_class->student_head;
+            while(temp_student != NULL){
+                if(temp_student->money > 200.0f){
 
+                }
+                temp_student = temp_student->next;
+            }
+            temp_class = temp_class->next;
+        }
+        temp_college = temp_college->next;
+    }
 }
 void MainWindow::Ratio(){
+    int total_number[4] = {0,0,0,0};
+    int money_number[4] = {0,0,0,0};
+    struct college_info* temp_college = head;
+    while(temp_college != NULL){
+        if(strcmp(temp_college->college_name,"CS") == 0){
+            struct class_info* temp_class = temp_college->class_head;
+            while(temp_class != NULL){
+                struct student_info* temp_student = temp_class->student_head;
+                while(temp_student != NULL){
+                    total_number[temp_class->grade-14]++;
+                    if(temp_student->money > 0.0f){
+                        money_number[temp_class->grade-14]++
+                    }
+                    temp_student = temp_student->next;
+                }
+                temp_class = temp_class->next;
+            }
+        }
+        else{
+            temp_college = temp_college->next;
+        }
+    }
+    float res[4];
+    for(int i = 0; i < 4; i++){
+        res[i] = money_number[i]/total_number[i];
+    }
 
 }
