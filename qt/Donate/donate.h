@@ -45,13 +45,13 @@ void save (struct college_info* head);
 //print
 void print(struct college_info* head);
 //change
-struct college_info* change_college(struct college_info* head, int nco);
-struct college_info* change_class(struct college_info* head,  int nco, int ncl);
-struct college_info* change_student(struct college_info* head, int nco,  int ncl, int nst);
+struct college_info* Change_college(struct college_info temp_info ,struct college_info* head, int nco);
+struct college_info* Change_class(struct class_info temp_info ,struct college_info* head,  int nco, int ncl);
+struct college_info* Change_student(struct student_info temp_info, struct college_info* head, int nco,  int ncl, int nst);
 //insert
-struct college_info* insert_college(struct college_info* head, int nco);
-struct college_info* insert_calss(struct college_info* head, int nco, int ncl);
-struct college_info* insert_student(struct college_info* head, int nco, int ncl, int nst);
+struct college_info* Insert_college(struct college_info temp_info,struct college_info* head, int nco);
+struct college_info* Insert_clsss(struct class_info temp_info,struct college_info* head, int nco, int ncl);
+struct college_info* Insert_student(struct student_info temp_info,struct college_info* head, int nco, int ncl, int nst);
 //delete
 struct college_info* delete_college(struct college_info* head, int nco);
 struct college_info* delete_class(struct college_info* head, int nco, int ncl);

@@ -258,23 +258,19 @@ void save (struct college_info* head){
         college_temp = college_temp->next;
     }
 }
-struct college_info* change_college(struct college_info* head, int nco){
+struct college_info* Change_college(struct college_info temp_info,struct college_info* head, int nco){
     int now = 1;
     struct college_info* temp = head;
     while(nco >  now){
         temp = temp-> next;
         now++;
     }
-    printf("Please input college name: \n");
-    scanf("%s",temp->college_name);
-    printf("Please input college's person name: \n");
-    scanf("%s",temp->person_name);
-    printf("Please input phone_number: \n");
-    scanf("%s",temp->phone_number);
-    printf("change over.\n");
+    strcpy(temp->college_name,temp_info.college_name);
+    strcpy(temp->person_name,temp_info.person_name);
+    strcpy(temp->phone_number,temp_info.phone_number);
     return head;
 }
-struct college_info* change_class(struct college_info* head,  int nco, int ncl){
+struct college_info* Change_class(struct class_info temp_info ,struct college_info* head,  int nco, int ncl){
     int now_co = 1;
     int now_cl = 1;
     struct college_info* college_temp = head;
@@ -287,20 +283,14 @@ struct college_info* change_class(struct college_info* head,  int nco, int ncl){
         class_temp = class_temp->next;
         now_cl++;
     }
-    printf("Please input class_ID: \n");
-    scanf("%s",class_temp->class_ID);
-    printf("Please input grade: \n");
-    scanf("%d",&class_temp->grade);
-    printf("Please input person_number: \n");
-    scanf("%d",&class_temp->person_number);
-    printf("Please input college_name: \n");
-    scanf("%s",class_temp->college_name);
-    printf("Please input counselor: \n");
-    scanf("%s",class_temp->counselor);
-    printf("change over.\n");
+    strcpy(class_temp->class_ID , temp_info.class_ID);
+    class_temp->grade = temp_info.grade;
+    class_temp->person_number = temp_info.person_number;
+    strcpy(class_temp->college_name , temp_info.college_name);
+    strcpy(class_temp->counselor,temp_info.counselor);
     return head;
 }
-struct college_info* change_student(struct college_info* head, int nco,  int ncl, int nst){
+struct college_info* Change_student(struct student_info temp_info ,struct college_info* head, int nco,  int ncl, int nst){
     int now_co = 1;
     int now_cl = 1;
     int now_st = 1;
@@ -319,20 +309,14 @@ struct college_info* change_student(struct college_info* head, int nco,  int ncl
         student_temp = student_temp->next;
         now_st++;
     }
-    printf("Please input name: \n");
-    scanf("%s",student_temp->name);
-    printf("Please input ID: \n");
-    scanf("%s",student_temp->ID);
-    printf("Please input gender: \n");
-    scanf("%c",&student_temp->gender);
-    printf("Please input age: \n");
-    scanf("%d",&student_temp->age);
-    printf("Please input money: \n");
-    scanf("%f",&student_temp->money);
-    printf("change over.\n");
+    strcpy(student_temp->name,temp_info.name);
+    strcpy(student_temp->ID,temp_info.ID);
+    student_temp->gender = temp_info.gender;
+    student_temp->age = temp_info.age;
+    student_temp->money = temp_info.money;
     return head;
 }
-struct college_info* insert_college(struct college_info* head, int nco){
+struct college_info* Insert_college(struct college_info temp_info,struct college_info* head, int nco){
     int now = 1;
     struct college_info* temp = head;
     while(nco - 1 >  now){
@@ -340,19 +324,15 @@ struct college_info* insert_college(struct college_info* head, int nco){
         now++;
     }
     struct college_info* college_new = (struct  college_info*)malloc(sizeof(struct college_info));
-    printf("Please input college name: \n");
-    scanf("%s",college_new->college_name);
-    printf("Please input college's person name: \n");
-    scanf("%s",college_new->person_name);
-    printf("Please input phone_number: \n");
-    scanf("%s",college_new->phone_number);
+    strcpy(college_new->college_name,temp_info.college_name);
+    strcpy(college_new->person_name,temp_info.person_name);
+    strcpy(college_new->phone_number,temp_info.phone_number);
     college_new->class_head = NULL;
     college_new->next = temp->next;
     temp->next = college_new;
-    printf("insert over.\n");
     return head;
 }
-struct college_info* insert_calss(struct college_info* head, int nco, int ncl){
+struct college_info* Insert_clsss(struct class_info temp_info,struct college_info* head, int nco, int ncl){
     int now_co = 1;
     int now_cl = 1;
     struct college_info* college_temp = head;
@@ -366,23 +346,17 @@ struct college_info* insert_calss(struct college_info* head, int nco, int ncl){
         now_cl++;
     }
     struct class_info* class_new = (struct  class_info*)malloc(sizeof(struct class_info));
-    printf("Please input class_ID: \n");
-    scanf("%s",class_new->class_ID);
-    printf("Please input grade: \n");
-    scanf("%d",&class_new->grade);
-    printf("Please input person_number: \n");
-    scanf("%d",&class_new->person_number);
-    printf("Please input college_name: \n");
-    scanf("%s",class_new->college_name);
-    printf("Please input counselor: \n");
-    scanf("%s",class_new->counselor);
+    strcpy(class_new->class_ID , temp_info.class_ID);
+    class_new->grade = temp_info.grade;
+    class_new->person_number = temp_info.person_number;
+    strcpy( class_new->college_name , temp_info.college_name);
+    strcpy(class_new->counselor , temp_info.counselor);
     class_new->student_head = NULL;
     class_new->next = class_temp->next;
     class_temp->next = class_new;
-    printf("insert over.\n");
     return head;
 }
-struct college_info* insert_student(struct college_info* head, int nco, int ncl, int nst){
+struct college_info* Insert_student(struct student_info temp_info,struct college_info* head, int nco, int ncl, int nst){
     int now_co = 1;
     int now_cl = 1;
     int now_st = 1;
@@ -402,16 +376,11 @@ struct college_info* insert_student(struct college_info* head, int nco, int ncl,
         now_st++;
     }
     struct student_info* student_new = (struct student_info*)malloc(sizeof(struct student_info));
-    printf("Please input name: \n");
-    scanf("%s",student_new->name);
-    printf("Please input ID: \n");
-    scanf("%s",student_new->ID);
-    printf("Please input gender: \n");
-    scanf("%c",&student_new->gender);
-    printf("Please input age: \n");
-    scanf("%d",&student_new->age);
-    printf("Please input money: \n");
-    scanf("%f",&student_new->money);
+    strcpy(student_new->name , temp_info.name);
+    strcpy(student_new->ID , temp_info.ID);
+    student_new->gender = temp_info.gender;
+    student_new->age = temp_info.age;
+    student_new->money = temp_info.money;
     student_new->next =  student_temp->next;
     student_temp->next = student_new;
     printf("insert over.\n");

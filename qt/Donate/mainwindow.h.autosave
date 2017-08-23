@@ -52,6 +52,8 @@ private slots:
     void Change();
     void Sort_student();
     void Sort_donate();
+    void More_than();
+    void Ratio();
 };
 
 #endif // MAINWINDOW_H

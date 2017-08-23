@@ -26,11 +26,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    donate.cpp
+    donate.cpp \
+    change_college.cpp \
+    change_class.cpp \
+    change_student.cpp \
+    insert_college.cpp \
+    insert_class.cpp \
+    insert_student.cpp
 
 HEADERS += \
         mainwindow.h \
-    donate.h
+    donate.h \
+    change_college.h \
+    change_class.h \
+    change_student.h \
+    insert_college.h \
+    insert_class.h \
+    insert_student.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    change_college.ui \
+    change_class.ui \
+    change_student.ui \
+    insert_college.ui \
+    insert_class.ui \
+    insert_student.ui

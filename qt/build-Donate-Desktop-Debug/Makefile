@@ -52,11 +52,35 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../Donate/main.cpp \
 		../Donate/mainwindow.cpp \
-		../Donate/donate.cpp moc_mainwindow.cpp
+		../Donate/donate.cpp \
+		../Donate/change_college.cpp \
+		../Donate/change_class.cpp \
+		../Donate/change_student.cpp \
+		../Donate/insert_college.cpp \
+		../Donate/insert_class.cpp \
+		../Donate/insert_student.cpp moc_mainwindow.cpp \
+		moc_change_college.cpp \
+		moc_change_class.cpp \
+		moc_change_student.cpp \
+		moc_insert_college.cpp \
+		moc_insert_class.cpp \
+		moc_insert_student.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		donate.o \
-		moc_mainwindow.o
+		change_college.o \
+		change_class.o \
+		change_student.o \
+		insert_college.o \
+		insert_class.o \
+		insert_student.o \
+		moc_mainwindow.o \
+		moc_change_college.o \
+		moc_change_class.o \
+		moc_change_student.o \
+		moc_insert_college.o \
+		moc_insert_class.o \
+		moc_insert_student.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -187,9 +211,21 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		../Donate/Donate.pro ../Donate/mainwindow.h \
-		../Donate/donate.h ../Donate/main.cpp \
+		../Donate/donate.h \
+		../Donate/change_college.h \
+		../Donate/change_class.h \
+		../Donate/change_student.h \
+		../Donate/insert_college.h \
+		../Donate/insert_class.h \
+		../Donate/insert_student.h ../Donate/main.cpp \
 		../Donate/mainwindow.cpp \
-		../Donate/donate.cpp
+		../Donate/donate.cpp \
+		../Donate/change_college.cpp \
+		../Donate/change_class.cpp \
+		../Donate/change_student.cpp \
+		../Donate/insert_college.cpp \
+		../Donate/insert_class.cpp \
+		../Donate/insert_student.cpp
 QMAKE_TARGET  = Donate
 DESTDIR       = 
 TARGET        = Donate
@@ -198,7 +234,7 @@ TARGET        = Donate
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_change_college.h ui_change_class.h ui_change_student.h ui_insert_college.h ui_insert_class.h ui_insert_student.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../Donate/Donate.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -483,9 +519,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Donate/mainwindow.h ../Donate/donate.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Donate/main.cpp ../Donate/mainwindow.cpp ../Donate/donate.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Donate/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Donate/mainwindow.h ../Donate/donate.h ../Donate/change_college.h ../Donate/change_class.h ../Donate/change_student.h ../Donate/insert_college.h ../Donate/insert_class.h ../Donate/insert_student.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Donate/main.cpp ../Donate/mainwindow.cpp ../Donate/donate.cpp ../Donate/change_college.cpp ../Donate/change_class.cpp ../Donate/change_student.cpp ../Donate/insert_college.cpp ../Donate/insert_class.cpp ../Donate/insert_student.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Donate/mainwindow.ui ../Donate/change_college.ui ../Donate/change_class.ui ../Donate/change_student.ui ../Donate/insert_college.ui ../Donate/insert_class.ui ../Donate/insert_student.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -517,23 +553,83 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_change_college.cpp moc_change_class.cpp moc_change_student.cpp moc_insert_college.cpp moc_insert_class.cpp moc_insert_student.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_change_college.cpp moc_change_class.cpp moc_change_student.cpp moc_insert_college.cpp moc_insert_class.cpp moc_insert_student.cpp
 moc_mainwindow.cpp: ../Donate/donate.h \
+		../Donate/change_college.h \
+		../Donate/change_class.h \
+		../Donate/change_student.h \
+		../Donate/insert_college.h \
+		../Donate/insert_class.h \
+		../Donate/insert_student.h \
 		../Donate/mainwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/mainwindow.h -o moc_mainwindow.cpp
 
+moc_change_college.cpp: ../Donate/change_college.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/change_college.h -o moc_change_college.cpp
+
+moc_change_class.cpp: ../Donate/change_class.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/change_class.h -o moc_change_class.cpp
+
+moc_change_student.cpp: ../Donate/change_student.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/change_student.h -o moc_change_student.cpp
+
+moc_insert_college.cpp: ../Donate/insert_college.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/insert_college.h -o moc_insert_college.cpp
+
+moc_insert_class.cpp: ../Donate/insert_class.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/insert_class.h -o moc_insert_class.cpp
+
+moc_insert_student.cpp: ../Donate/insert_student.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/insert_student.h -o moc_insert_student.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_change_college.h ui_change_class.h ui_change_student.h ui_insert_college.h ui_insert_class.h ui_insert_student.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_change_college.h ui_change_class.h ui_change_student.h ui_insert_college.h ui_insert_class.h ui_insert_student.h
 ui_mainwindow.h: ../Donate/mainwindow.ui \
 		/usr/bin/uic
 	/usr/bin/uic ../Donate/mainwindow.ui -o ui_mainwindow.h
+
+ui_change_college.h: ../Donate/change_college.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../Donate/change_college.ui -o ui_change_college.h
+
+ui_change_class.h: ../Donate/change_class.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../Donate/change_class.ui -o ui_change_class.h
+
+ui_change_student.h: ../Donate/change_student.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../Donate/change_student.ui -o ui_change_student.h
+
+ui_insert_college.h: ../Donate/insert_college.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../Donate/insert_college.ui -o ui_insert_college.h
+
+ui_insert_class.h: ../Donate/insert_class.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../Donate/insert_class.ui -o ui_insert_class.h
+
+ui_insert_student.h: ../Donate/insert_student.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../Donate/insert_student.ui -o ui_insert_student.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -546,19 +642,73 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 ####### Compile
 
 main.o: ../Donate/main.cpp ../Donate/mainwindow.h \
-		../Donate/donate.h
+		../Donate/donate.h \
+		../Donate/change_college.h \
+		../Donate/change_class.h \
+		../Donate/change_student.h \
+		../Donate/insert_college.h \
+		../Donate/insert_class.h \
+		../Donate/insert_student.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Donate/main.cpp
 
 mainwindow.o: ../Donate/mainwindow.cpp ../Donate/mainwindow.h \
 		../Donate/donate.h \
+		../Donate/change_college.h \
+		../Donate/change_class.h \
+		../Donate/change_student.h \
+		../Donate/insert_college.h \
+		../Donate/insert_class.h \
+		../Donate/insert_student.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Donate/mainwindow.cpp
 
 donate.o: ../Donate/donate.cpp ../Donate/donate.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o donate.o ../Donate/donate.cpp
 
+change_college.o: ../Donate/change_college.cpp ../Donate/change_college.h \
+		ui_change_college.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o change_college.o ../Donate/change_college.cpp
+
+change_class.o: ../Donate/change_class.cpp ../Donate/change_class.h \
+		ui_change_class.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o change_class.o ../Donate/change_class.cpp
+
+change_student.o: ../Donate/change_student.cpp ../Donate/change_student.h \
+		ui_change_student.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o change_student.o ../Donate/change_student.cpp
+
+insert_college.o: ../Donate/insert_college.cpp ../Donate/insert_college.h \
+		ui_insert_college.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o insert_college.o ../Donate/insert_college.cpp
+
+insert_class.o: ../Donate/insert_class.cpp ../Donate/insert_class.h \
+		ui_insert_class.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o insert_class.o ../Donate/insert_class.cpp
+
+insert_student.o: ../Donate/insert_student.cpp ../Donate/insert_student.h \
+		ui_insert_student.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o insert_student.o ../Donate/insert_student.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_change_college.o: moc_change_college.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_change_college.o moc_change_college.cpp
+
+moc_change_class.o: moc_change_class.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_change_class.o moc_change_class.cpp
+
+moc_change_student.o: moc_change_student.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_change_student.o moc_change_student.cpp
+
+moc_insert_college.o: moc_insert_college.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_insert_college.o moc_insert_college.cpp
+
+moc_insert_class.o: moc_insert_class.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_insert_class.o moc_insert_class.cpp
+
+moc_insert_student.o: moc_insert_student.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_insert_student.o moc_insert_student.cpp
 
 ####### Install
 
