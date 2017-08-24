@@ -542,6 +542,25 @@ void search_student(struct college_info* head, char* college_name, char* class_I
         }
     }
 }
+bool search_CS_class(struct college_info* head,int grade,char* class_ID){
+    struct college_info* temp_college = head;
+    while(temp_college != NULL){
+        if(strcmp(temp_college->college_name,"CS") == 0){
+            struct class_info* temp_class = temp_college->class_head;
+            while(temp_class != NULL){
+                if(strcmp(temp_class->class_ID,class_ID) == 0&& temp_class->grade == grade){
+                    return true;
+                }
+                temp_class = temp_class->next;
+            }
+        }
+        else{
+            temp_college = temp_college->next;
+        }
+    }
+    return false;
+}
+
 int college_length(struct college_info* head){
     struct college_info* temp = head;
     int count = 0;

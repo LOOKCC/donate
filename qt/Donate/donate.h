@@ -41,7 +41,8 @@ struct student_info
 //create and save
 struct college_info* create_with_console();
 struct college_info* create_with_file(char* filename);
-void save (struct college_info* head);
+void save(struct college_info* head);
+void load()
 //print
 void print(struct college_info* head);
 //change
@@ -60,6 +61,7 @@ struct college_info* delete_student(struct college_info* head, int nco, int ncl,
 void search_college(struct college_info* head, char* college_name, int position[]);
 void search_class(struct college_info* head, char* college_name, char* class_ID, int position);
 void search_student(struct college_info* head, char* college_name, char* class_ID, char* name, int position[]);
+bool search_CS_class(struct college_info* head,int grade,char* class_ID);
 //length
 int college_length(struct college_info* head);
 int class_length(struct class_info* head);

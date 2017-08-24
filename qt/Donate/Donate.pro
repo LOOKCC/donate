@@ -32,7 +32,10 @@ SOURCES += \
     change_student.cpp \
     insert_college.cpp \
     insert_class.cpp \
-    insert_student.cpp
+    insert_student.cpp \
+    search.cpp \
+    more.cpp \
+    ratio.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +45,10 @@ HEADERS += \
     change_student.h \
     insert_college.h \
     insert_class.h \
-    insert_student.h
+    insert_student.h \
+    search.h \
+    more.h \
+    ratio.h
 
 FORMS += \
         mainwindow.ui \
@@ -51,4 +57,7 @@ FORMS += \
     change_student.ui \
     insert_college.ui \
     insert_class.ui \
-    insert_student.ui
+    insert_student.ui \
+    search.ui \
+    more.ui \
+    ratio.ui

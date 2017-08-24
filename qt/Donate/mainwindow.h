@@ -8,6 +8,9 @@
 #include "insert_college.h"
 #include "insert_class.h"
 #include "insert_student.h"
+#include "search.h"
+#include "ratio.h"
+#include "more.h"
 #include <QMainWindow>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
@@ -18,6 +21,7 @@
 #include <QByteArray>
 #include <QByteArrayData>
 #include <string.h>
+#include <QMessageBox>
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +47,9 @@ private:
     insert_college* insert_college_win;
     insert_class* insert_class_win;
     insert_student* insert_student_win;
+    Search* search_win;
+    ratio* ratio_win;
+    more* more_win;
     int now_index[3];
     struct college_info* head;
 private slots:
@@ -52,6 +59,9 @@ private slots:
     void Change();
     void Sort_student();
     void Sort_donate();
+    void More_than();
+    void Ratio();
+    void Search_class();
 };
 
 #endif // MAINWINDOW_H

@@ -23,6 +23,11 @@
       <height>611</height>
      </rect>
     </property>
+    <column>
+     <property name="text">
+      <string notr="true">1</string>
+     </property>
+    </column>
    </widget>
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
@@ -34,7 +39,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>520</x>
@@ -72,46 +77,57 @@
      <rect>
       <x>550</x>
       <y>490</y>
-      <width>196</width>
-      <height>68</height>
+      <width>198</width>
+      <height>104</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Sort_student</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="sortsButton">
+           <property name="text">
+            <string>Sort_student</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="sortdButton">
+           <property name="text">
+            <string>Sort_donate</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="sortButton">
-         <property name="text">
-          <string>Sort_donate</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="moreButton">
+           <property name="text">
+            <string>&gt;200</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ratioButton">
+           <property name="text">
+            <string>Ratio</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QPushButton" name="moreButton">
-         <property name="text">
-          <string>&gt;200</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="ratioButton">
-         <property name="text">
-          <string>Ratio</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="searchButton">
+       <property name="text">
+        <string>Search</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
