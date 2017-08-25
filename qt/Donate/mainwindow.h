@@ -70,9 +70,9 @@ private slots:
     void Change_Class();
     void Change_Student();
     void Search_Class();
-    void Create_College();
-    void Create_Class();
-    void Create_Student();
+    //void Create_College();
+    //void Create_Class();
+    //void Create_Student();
 };
 
 #endif // MAINWINDOW_H
