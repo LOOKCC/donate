@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
 struct college_info* create_with_console(){
     int college_count ;
     int college_now = 0;
@@ -92,7 +93,39 @@ struct college_info* create_with_console(){
     }
     return college_head;
 }
-
+void print(struct college_info* head){
+    struct college_info* college_temp;
+    struct class_info* class_temp;
+    struct student_info* student_temp;
+    college_temp = head;
+    while(college_temp!=NULL){
+        printf("college: \n");
+        printf("college_name: %s ",college_temp->college_name);
+        printf("person_name: %s ",college_temp->person_name);
+        printf("phone_number: %s\n",college_temp->phone_number);
+        printf("		class: \n");
+        class_temp = college_temp->class_head;
+        while(class_temp!=NULL){
+            printf("		class_ID: %s ",class_temp->class_ID);
+            printf("grate: %d ",class_temp->grade);
+            printf("person_number: %d ",class_temp->person_number);
+            printf("college_name: %s ",class_temp->college_name);
+            printf("counselor: %s\n",class_temp->counselor);
+            printf("			student: \n");
+            student_temp = class_temp->student_head;
+            while(student_temp!=NULL){
+                printf("			name: %s ",student_temp->name);
+                printf("ID: %s ",student_temp->ID);
+                printf("genter: %c ",student_temp->gender);
+                printf("age: %d ",student_temp->age);
+                printf("money: %f\n",student_temp->money);
+                student_temp = student_temp->next;
+            }
+            class_temp = class_temp->next;
+        }
+        college_temp = college_temp->next;
+    }
+}
 struct college_info* create_with_file(char* filename){
     FILE* info;
     info = fopen(filename, "r");
@@ -186,39 +219,6 @@ struct college_info* create_with_file(char* filename){
     }
     return college_head;
 }
-void print(struct college_info* head){
-    struct college_info* college_temp;
-    struct class_info* class_temp;
-    struct student_info* student_temp;
-    college_temp = head;
-    while(college_temp!=NULL){
-        printf("college: \n");
-        printf("college_name: %s ",college_temp->college_name);
-        printf("person_name: %s ",college_temp->person_name);
-        printf("phone_number: %s\n",college_temp->phone_number);
-        printf("		class: \n");
-        class_temp = college_temp->class_head;
-        while(class_temp!=NULL){
-            printf("		class_ID: %s ",class_temp->class_ID);
-            printf("grate: %d ",class_temp->grade);
-            printf("person_number: %d ",class_temp->person_number);
-            printf("college_name: %s ",class_temp->college_name);
-            printf("counselor: %s\n",class_temp->counselor);
-            printf("			student: \n");
-            student_temp = class_temp->student_head;
-            while(student_temp!=NULL){
-                printf("			name: %s ",student_temp->name);
-                printf("ID: %s ",student_temp->ID);
-                printf("genter: %c ",student_temp->gender);
-                printf("age: %d ",student_temp->age);
-                printf("money: %f\n",student_temp->money);
-                student_temp = student_temp->next;
-            }
-            class_temp = class_temp->next;
-        }
-        college_temp = college_temp->next;
-    }
-}
 void save (struct college_info* head){
     FILE* info_save;
     info_save = fopen("info_save","wb");
@@ -258,6 +258,125 @@ void save (struct college_info* head){
         college_temp = college_temp->next;
     }
 }
+*/
+struct college_info* create_college(struct college_info temp, struct college_info* head){
+    struct college_info* college_new = (struct  college_info*)malloc(sizeof(struct college_info));
+    college_new->class_head = NULL;
+    college_new->next = NULL;
+    strcpy(college_new->college_name,temp.college_name);
+    strcpy(college_new->person_name,temp.person_name);
+    strcpy(college_new->phone_number,temp.phone_number);
+    head = college_new;
+    return head;
+}
+struct college_info* create_class(struct class_info temp_info, struct college_info* head,int n){
+    struct college_info* temp = head;
+    for(int i = 0; i < n ; ++i){
+        temp = temp->next;
+    }
+    struct class_info* class_new = (struct  class_info*)malloc(sizeof(struct class_info));
+    strcpy(class_new->class_ID , temp_info.class_ID);
+    class_new->grade = temp_info.grade;
+    class_new->person_number = temp_info.person_number;
+    strcpy( class_new->college_name , temp_info.college_name);
+    strcpy(class_new->counselor , temp_info.counselor);
+    class_new->student_head = NULL;
+    class_new->next = NULL;
+    temp->class_head = class_new;
+    return head;
+}
+struct college_info* create_student(struct student_info temp_info, struct college_info* head,int n1,int n2){
+    struct college_info* college_temp = head;
+    for(int i = 0; i < n1; ++i){
+        college_temp = college_temp->next;
+    }
+    struct class_info* class_temp = college_temp->class_head;
+    for(int i = 0; i < n2; ++i){
+        class_temp = class_temp->next;
+    }
+    struct student_info* student_new = (struct student_info*)malloc(sizeof(struct student_info));
+    strcpy(student_new->name , temp_info.name);
+    strcpy(student_new->ID , temp_info.ID);
+    student_new->gender = temp_info.gender;
+    student_new->age = temp_info.age;
+    student_new->money = temp_info.money;
+    student_new->next = NULL;
+    class_temp->student_head = student_new;
+    return head;
+}
+void modify(struct college_info* head){
+    struct college_info* college_temp = head;
+    while(college_temp != NULL){
+        college_temp->total_class = class_length(college_temp->class_head);
+        struct class_info* class_temp = college_temp->class_head;
+        while(class_temp != NULL){
+            class_temp->total_student = student_length(class_temp->student_head);
+            class_temp = class_temp->next;
+        }
+        college_temp = college_temp->next;
+    }
+}
+
+bool save(struct college_info* head,char* college_file_name,char* class_file_name,char*  student_file_name){
+    FILE* college_file = fopen(college_file_name,"wb");
+    FILE* class_file = fopen(class_file_name,"wb");
+    FILE* student_file = fopen(student_file_name,"wb");
+    if(!(college_file && class_file && student_file)){
+        return false;
+    }else{
+        struct college_info* college_temp = head;
+        while(college_temp != NULL){
+            fwrite(college_temp, sizeof(college_info), 1, college_file);
+            struct class_info* class_temp = college_temp->class_head;
+            while(class_temp != NULL){
+                fwrite(class_temp, sizeof(class_info), 1, class_file);
+                struct student_info* student_temp = class_temp->student_head;
+                while(student_temp != NULL){
+                    fwrite(class_temp, sizeof(class_info), 1, class_file);
+                    student_temp = student_temp->next;
+                }
+                class_temp = class_temp->next;
+            }
+            college_temp = college_temp->next;
+        }
+    }
+    return true;
+}
+bool load(struct college_info* head,char* college_file_name,char* class_file_name,char*  student_file_name){
+    FILE* college_file = fopen(college_file_name,"rb");
+    FILE* class_file = fopen(class_file_name,"rb");
+    FILE* student_file = fopen(student_file_name,"rb");
+    if(!(college_file && class_file && student_file)){
+        return false;
+    }else{
+        while(true){
+            struct college_info* college_new = (struct  college_info*)malloc(sizeof(struct college_info));
+            if(fread(college_new, sizeof(college_info), 1, college_file) != 1){
+                break;
+            }
+            college_new->next = head ;
+            head = college_new;
+            college_new->class_head = NULL;
+            for(int i = 0;i < college_new->total_class;++i){
+                struct class_info* class_new = (struct class_info*)malloc(sizeof(struct class_info));
+                fread(class_new, sizeof(class_info), 1, class_file);
+                class_new->next = college_new->class_head;
+                college_new->class_head = class_new;
+                class_new->student_head = NULL;
+                for(int j = 0; j < class_new->total_student; ++j){
+                    struct student_info* student_new = (struct student_info*)malloc(sizeof(struct student_info));
+                    fread(student_new, sizeof(student_info), 1, student_file);
+                    student_new->next = class_new->student_head;
+                    class_new->student_head = student_new;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+
+
 struct college_info* Change_college(struct college_info temp_info,struct college_info* head, int nco){
     int now = 1;
     struct college_info* temp = head;
@@ -332,7 +451,7 @@ struct college_info* Insert_college(struct college_info temp_info,struct college
     temp->next = college_new;
     return head;
 }
-struct college_info* Insert_clsss(struct class_info temp_info,struct college_info* head, int nco, int ncl){
+struct college_info* Insert_class(struct class_info temp_info,struct college_info* head, int nco, int ncl){
     int now_co = 1;
     int now_cl = 1;
     struct college_info* college_temp = head;

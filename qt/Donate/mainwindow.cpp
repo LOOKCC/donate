@@ -17,13 +17,44 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->verticalHeader()->setVisible(false);//hide
     ui->tableWidget->setColumnWidth(0,100);
     ui->tableWidget->setColumnWidth(1,100);
-    //ui->tableWidget->setRowHeight(60);
-    //ui->tableWidget->resizeColumnsToContents();
-    //ui->tableWidget->resizeRowsToContents();
+    head = NULL;
+    now_index[0] = -1;
+    now_index[1] = -1;
+    now_index[2] = -1;
+    change_college_win = new change_college(this);
+    change_class_win = new change_class(this);
+    change_student_win = new change_student(this);
+    insert_college_win = new insert_college(this);
+    insert_class_win = new insert_class(this);
+    insert_student_win = new insert_student(this);
+    more_win = new more(this);
+    ratio_win = new ratio(this);
+    search_win = new Search(this);
+
 
 //qt connect
-    connect(ui->treeWidget,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(test(QTreeWidgetItem*)));
-    connect(ui->insertButton,SIGNAL(clicked()),this,SLOT(Insert()));
+    connect(ui->treeWidget,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(Show_info(QTreeWidgetItem* ,int)));
+
+    connect(ui->insertButton,SIGNAL(clicked()),this,SLOT(Insert_Show()));
+    connect(ui->changeButton,SIGNAL(clicked()),this,SLOT(Change_Show()));
+    connect(ui->deleteButton,SIGNAL(clicked()),this,SLOT(Delete()));
+
+    connect(ui->sortsButton,SIGNAL(clicked()),this,SLOT(Sort_student()));
+    connect(ui->sortdButton,SIGNAL(clicked()),this,SLOT(Sort_donate()));
+    connect(ui->moreButton,SIGNAL(clicked()),this,SLOT(More_than()));
+    connect(ui->searchButton,SIGNAL(clicked()),this,SLOT(Search_Class_show()));
+    connect(ui->ratioButton,SIGNAL(clicked()),this,SLOT(Ratio()));
+    //change
+    connect(change_college_win,SIGNAL(accepted()),this,SLOT(Change_College()));
+    connect(change_class_win,SIGNAL(accepted()),this,SLOT(Change_Class()));
+    connect(change_student_win,SIGNAL(accepted()),this,SLOT(Change_Student()));
+    //insert
+    connect(insert_college_win,SIGNAL(accepted()),this,SLOT(Insert_College()));
+    connect(insert_class_win,SIGNAL(accepted()),this,SLOT(Insert_Class()));
+    connect(insert_student_win,SIGNAL(accepted()),this,SLOT(Insert_Student()));
+    //search
+    connect(search_win,SIGNAL(accepted()),this,SLOT(Search_Class()));
+
 //donate
     //head = create_with_file("");
     //Show_tree();
@@ -46,9 +77,14 @@ void MainWindow::Mouse_position(QTreeWidgetItem* item){
         item = parent;
         parent = item->parent();
     }
+    qDebug()<<now_index[0]<<now_index[1]<<now_index[2];
 }
-void MainWindow::Show_tree(struct college_info* head){
+void MainWindow::Show_tree(){
+    qDebug()<<"show_tree_begin";
     QTreeWidgetItem *All = new QTreeWidgetItem(ui->treeWidget,QStringList(QString("All")));
+    //for test
+    QTreeWidgetItem *test = new QTreeWidgetItem(All,QStringList(QString("test")));
+    All->addChild(test);
     struct college_info* college_temp = head;
     while(college_temp != NULL){
         QTreeWidgetItem *college = new QTreeWidgetItem(QStringList(QString(college_temp->college_name)));
@@ -67,8 +103,10 @@ void MainWindow::Show_tree(struct college_info* head){
         }
         college_temp = college_temp->next;
     }
+    qDebug()<<"show_tree_over";
 }
-void MainWindow::Show_info(){
+void MainWindow::Show_info(QTreeWidgetItem* item,int n){
+    Mouse_position(item);
     //nothing
     if(now_index[0] == -1 && now_index[1] == -1 && now_index[2] == -1){
        return;
@@ -146,66 +184,69 @@ void MainWindow::Show_info(){
         ui->tableWidget->setItem(4, 1, new QTableWidgetItem(student_temp->money));
     }
 }
-void MainWindow::Insert(){
+void MainWindow::Insert_Show(){
     //nothig
     if(now_index[0] == -1 && now_index[1] == -1 && now_index[2] == -1){
        return;
     }
     //college
     if(now_index[0] != -1 && now_index[1] == -1 && now_index[2] == -1){
-        insert_college_win = new insert_college(this);
         insert_college_win->show();
-        QString college_name = insert_college_win->get_college_name();
-        QString person_name = insert_college_win->get_person_name();
-        QString phone_number = insert_college_win->get_phone_number();
-        struct college_info temp ;
-        QByteArray ba1 = college_name.toLatin1();
-        strcpy(temp.college_name,ba1.data());
-        QByteArray ba2 = person_name.toLatin1();
-        strcpy(temp.person_name,ba2.data());
-        QByteArray ba3 = phone_number.toLatin1();
-        strcpy(temp.phone_number,ba3.data());
-        head = Insert_college(temp,head,now_index[0]);
     }
     //class
     if(now_index[0] != -1 && now_index[1] != -1 && now_index[2] == -1){
-        insert_class_win = new insert_class(this);
         insert_class_win->show();
-        QString class_ID = insert_class_win->get_class_ID();
-        int grade = insert_class_win->get_grade();
-        int person_number = insert_class_win->get_person_number();
-        QString college_name = insert_class_win->get_college_name();
-        QString counselor = insert_class_win->get_counselor();
-        struct class_info temp ;
-        QByteArray ba1 = class_ID.toLatin1();
-        strcpy(temp.class_ID,ba1.data());
-        temp.grade = grade;
-        temp.person_number = person_number;
-        QByteArray ba2 = college_name.toLatin1();
-        strcpy(temp.college_name,ba2.data());
-        QByteArray ba3 = counselor.toLatin1();
-        strcpy(temp.counselor,ba3.data());
-        head = Insert_class(temp,head,now_index[1],now_index[0]);
     }
     //student
     if(now_index[0] != -1 && now_index[1] != -1 && now_index[2] != -1){
-        insert_student_win = new insert_student(this);
         insert_student_win->show();
-        QString name = insert_student_win->get_name();
-        QString ID = insert_student_win->get_ID();
-        QChar gender = insert_student_win->get_gender();
-        int age = insert_student_win->get_age();
-        float money = insert_student_win->get_money();
-        struct student_info temp;
-        QByteArray ba1 = name.toLatin1();
-        strcpy(temp.name,ba1.data());
-        QByteArray ba2 = ID.toLatin1();
-        strcpy(temp.ID,ba2.data());
-        temp.gender = gender;
-        temp.age = age;
-        temp.money = money;
-        head = Insert_student(temp,head,now_index[2],now_index[1],now_index[0]);
     }
+}
+void MainWindow::Insert_College(){
+    QString college_name = insert_college_win->get_college_name();
+    QString person_name = insert_college_win->get_person_name();
+    QString phone_number = insert_college_win->get_phone_number();
+    struct college_info temp ;
+    QByteArray ba1 = college_name.toLatin1();
+    strcpy(temp.college_name,ba1.data());
+    QByteArray ba2 = person_name.toLatin1();
+    strcpy(temp.person_name,ba2.data());
+    QByteArray ba3 = phone_number.toLatin1();
+    strcpy(temp.phone_number,ba3.data());
+    head = Insert_college(temp,head,now_index[0]);
+}
+void MainWindow::Insert_Class(){
+    QString class_ID = insert_class_win->get_class_ID();
+    int grade = insert_class_win->get_grade();
+    int person_number = insert_class_win->get_person_number();
+    QString college_name = insert_class_win->get_college_name();
+    QString counselor = insert_class_win->get_counselor();
+    struct class_info temp ;
+    QByteArray ba1 = class_ID.toLatin1();
+    strcpy(temp.class_ID,ba1.data());
+    temp.grade = grade;
+    temp.person_number = person_number;
+    QByteArray ba2 = college_name.toLatin1();
+    strcpy(temp.college_name,ba2.data());
+    QByteArray ba3 = counselor.toLatin1();
+    strcpy(temp.counselor,ba3.data());
+    head = Insert_class(temp,head,now_index[1],now_index[0]);
+}
+void MainWindow::Insert_Student(){
+    QString name = insert_student_win->get_name();
+    QString ID = insert_student_win->get_ID();
+    QChar gender = insert_student_win->get_gender();
+    int age = insert_student_win->get_age();
+    float money = insert_student_win->get_money();
+    struct student_info temp;
+    QByteArray ba1 = name.toLatin1();
+    strcpy(temp.name,ba1.data());
+    QByteArray ba2 = ID.toLatin1();
+    strcpy(temp.ID,ba2.data());
+    temp.gender = gender.unicode();
+    temp.age = age;
+    temp.money = money;
+    head = Insert_student(temp,head,now_index[2],now_index[1],now_index[0]);
 }
 void MainWindow::Delete(){
     //nothig
@@ -225,67 +266,73 @@ void MainWindow::Delete(){
         head = delete_student(head,now_index[2],now_index[1],now_index[0]);
     }
 }
-void MainWindow::Change(){
+void MainWindow::Change_Show(){
     //nothig
     if(now_index[0] == -1 && now_index[1] == -1 && now_index[2] == -1){
        return;
     }
     //college
     if(now_index[0] != -1 && now_index[1] == -1 && now_index[2] == -1){
-        change_college_win = new change_college(this);
         change_college_win->show();
-        QString college_name = change_college_win->get_college_name();
-        QString person_name = change_college_win->get_person_name();
-        QString phone_number = change_college_win->get_phone_number();
-        struct college_info temp ;
-        QByteArray ba1 = college_name.toLatin1();
-        strcpy(temp.college_name,ba1.data());
-        QByteArray ba2 = person_name.toLatin1();
-        strcpy(temp.person_name,ba2.data());
-        QByteArray ba3 = phone_number.toLatin1();
-        strcpy(temp.phone_number,ba3.data());
-        head = Change_college(temp,head,now_index[0]);
     }
     //class
     if(now_index[0] != -1 && now_index[1] != -1 && now_index[2] == -1){
-        change_class_win = new change_class(this);
         change_class_win->show();
-        QString class_ID = change_class_win->get_class_ID();
-        int grade = change_class_win->get_grade();
-        int person_number = change_class_win->get_person_number();
-        QString college_name = change_class_win->get_college_name();
-        QString counselor = change_class_win->get_counselor();
-        struct class_info temp ;
-        QByteArray ba1 = class_ID.toLatin1();
-        strcpy(temp.class_ID,ba1.data());
-        temp.grade = grade;
-        temp.person_number = person_number;
-        QByteArray ba2 = college_name.toLatin1();
-        strcpy(temp.college_name,ba2.data());
-        QByteArray ba3 = counselor.toLatin1();
-        strcpy(temp.counselor,ba3.data());
-        head = Change_class(temp,head,now_index[1],now_index[0]);
     }
     //student
     if(now_index[0] != -1 && now_index[1] != -1 && now_index[2] != -1){
-        change_student_win = new change_student(this);
         change_student_win->show();
-        QString name = change_student_win->get_name();
-        QString ID = change_student_win->get_ID();
-        QChar gender = change_student_win->get_gender();
-        int age = change_student_win->get_age();
-        float money = change_student_win->get_money();
-        struct student_info temp;
-        QByteArray ba1 = name.toLatin1();
-        strcpy(temp.name,ba1.data());
-        QByteArray ba2 = ID.toLatin1();
-        strcpy(temp.ID,ba2.data());
-        temp.gender = gender;
-        temp.age = age;
-        temp.money = money;
-        head = Change_student(temp,head,now_index[2],now_index[1],now_index[0]);
     }
 }
+void MainWindow::Change_College(){
+    QString college_name = change_college_win->get_college_name();
+    QString person_name = change_college_win->get_person_name();
+    QString phone_number = change_college_win->get_phone_number();
+    struct college_info temp ;
+    QByteArray ba1 = college_name.toLatin1();
+    strcpy(temp.college_name,ba1.data());
+    QByteArray ba2 = person_name.toLatin1();
+    strcpy(temp.person_name,ba2.data());
+    QByteArray ba3 = phone_number.toLatin1();
+    strcpy(temp.phone_number,ba3.data());
+    head = Change_college(temp,head,now_index[0]);
+}
+
+void MainWindow::Change_Class(){
+    QString class_ID = change_class_win->get_class_ID();
+    int grade = change_class_win->get_grade();
+    int person_number = change_class_win->get_person_number();
+    QString college_name = change_class_win->get_college_name();
+    QString counselor = change_class_win->get_counselor();
+    struct class_info temp ;
+    QByteArray ba1 = class_ID.toLatin1();
+    strcpy(temp.class_ID,ba1.data());
+    temp.grade = grade;
+    temp.person_number = person_number;
+    QByteArray ba2 = college_name.toLatin1();
+    strcpy(temp.college_name,ba2.data());
+    QByteArray ba3 = counselor.toLatin1();
+    strcpy(temp.counselor,ba3.data());
+    head = Change_class(temp,head,now_index[1],now_index[0]);
+}
+
+void MainWindow::Change_Student(){
+    QString name = change_student_win->get_name();
+    QString ID = change_student_win->get_ID();
+    QChar gender = change_student_win->get_gender();
+    int age = change_student_win->get_age();
+    float money = change_student_win->get_money();
+    struct student_info temp;
+    QByteArray ba1 = name.toLatin1();
+    strcpy(temp.name,ba1.data());
+    QByteArray ba2 = ID.toLatin1();
+    strcpy(temp.ID,ba2.data());
+    temp.gender = gender.unicode();
+    temp.age = age;
+    temp.money = money;
+    head = Change_student(temp,head,now_index[2],now_index[1],now_index[0]);
+}
+
 void MainWindow::Sort_student(){
     sort_student_all(head);
     QMessageBox::information(NULL,"Information","Sorted by student",QMessageBox::Ok);
@@ -295,7 +342,6 @@ void MainWindow::Sort_donate(){
     QMessageBox::information(NULL,"Information","Sorted by donate",QMessageBox::Ok);
 }
 void MainWindow::More_than(){
-    more_win = new more(this);
     struct college_info* temp_college = head;
     while(temp_college != NULL){
         struct class_info* temp_class = temp_college->class_head;
@@ -303,7 +349,8 @@ void MainWindow::More_than(){
             struct student_info* temp_student = temp_class->student_head;
             while(temp_student != NULL){
                 if(temp_student->money > 200.0f){
-                    QString s = QString::number(temp_student->money, 10);
+                    //QString s = QString::number(temp_student->money,10);
+                    QString s = QString("%1").arg(temp_student->money);
                     more_win->Add_info(QString(QLatin1String(temp_student->name)),s);
                 }
                 temp_student = temp_student->next;
@@ -312,9 +359,9 @@ void MainWindow::More_than(){
         }
         temp_college = temp_college->next;
     }
+    more_win->show();
 }
 void MainWindow::Ratio(){
-    ratio_win = new ratio(this);
     int total_number[4] = {0,0,0,0};
     int money_number[4] = {0,0,0,0};
     struct college_info* temp_college = head;
@@ -326,7 +373,7 @@ void MainWindow::Ratio(){
                 while(temp_student != NULL){
                     total_number[temp_class->grade-14]++;
                     if(temp_student->money > 0.0f){
-                        money_number[temp_class->grade-14]++
+                        money_number[temp_class->grade-14]++;
                     }
                     temp_student = temp_student->next;
                 }
@@ -360,17 +407,20 @@ void MainWindow::Ratio(){
             }
         }
         QString s1 = QString::number(position+14, 10);
-        QString s2 = QString::number(temp_ratio[i], 10);
+        QString s2 = QString("%1").arg(temp_ratio[i]);
+        //QString s2 = QString::number(temp_ratio[i], 10);
         ratio_win->set_grade(i,0,s1);
         ratio_win->set_grade(i,1,s2);
     }
+    ratio_win->show();
 }
-void MainWindow::Search_class(){
-    search_win = new Search(this);
+void MainWindow::Search_Class_show(){
     search_win->show();
+}
+void MainWindow::Search_Class(){
     QString class_ID = search_win->get_class_ID();
     QByteArray ba1 = class_ID.toLatin1();
-    char* class_ID_char ;
+    char* class_ID_char;
     strcpy(class_ID_char,ba1.data());
     int grade = search_win->get_grade();
     if(search_CS_class(head,grade,class_ID_char)){

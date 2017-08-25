@@ -18,8 +18,8 @@ more::~more()
     delete ui;
 }
 void more::Add_info(QString name, QString money){
-    int row = tableWidget->rowCount();
-    tableWidget->setRowCount(row+1);
-    ui->tableWidget->setItem(raw,0,new QTableWidgetItem(name));
-    ui->tableWidget->setItem(raw,1,new QTableWidgetItem(money));
+    int row = ui->tableWidget->rowCount();
+    ui->tableWidget->setRowCount(row+1);
+    ui->tableWidget->setItem(row,0,new QTableWidgetItem(name));
+    ui->tableWidget->setItem(row,1,new QTableWidgetItem(money));
 }

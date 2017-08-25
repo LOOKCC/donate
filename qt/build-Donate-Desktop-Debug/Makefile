@@ -58,13 +58,19 @@ SOURCES       = ../Donate/main.cpp \
 		../Donate/change_student.cpp \
 		../Donate/insert_college.cpp \
 		../Donate/insert_class.cpp \
-		../Donate/insert_student.cpp moc_mainwindow.cpp \
+		../Donate/insert_student.cpp \
+		../Donate/search.cpp \
+		../Donate/more.cpp \
+		../Donate/ratio.cpp moc_mainwindow.cpp \
 		moc_change_college.cpp \
 		moc_change_class.cpp \
 		moc_change_student.cpp \
 		moc_insert_college.cpp \
 		moc_insert_class.cpp \
-		moc_insert_student.cpp
+		moc_insert_student.cpp \
+		moc_search.cpp \
+		moc_more.cpp \
+		moc_ratio.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		donate.o \
@@ -74,13 +80,19 @@ OBJECTS       = main.o \
 		insert_college.o \
 		insert_class.o \
 		insert_student.o \
+		search.o \
+		more.o \
+		ratio.o \
 		moc_mainwindow.o \
 		moc_change_college.o \
 		moc_change_class.o \
 		moc_change_student.o \
 		moc_insert_college.o \
 		moc_insert_class.o \
-		moc_insert_student.o
+		moc_insert_student.o \
+		moc_search.o \
+		moc_more.o \
+		moc_ratio.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -217,7 +229,10 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../Donate/change_student.h \
 		../Donate/insert_college.h \
 		../Donate/insert_class.h \
-		../Donate/insert_student.h ../Donate/main.cpp \
+		../Donate/insert_student.h \
+		../Donate/search.h \
+		../Donate/more.h \
+		../Donate/ratio.h ../Donate/main.cpp \
 		../Donate/mainwindow.cpp \
 		../Donate/donate.cpp \
 		../Donate/change_college.cpp \
@@ -225,7 +240,10 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../Donate/change_student.cpp \
 		../Donate/insert_college.cpp \
 		../Donate/insert_class.cpp \
-		../Donate/insert_student.cpp
+		../Donate/insert_student.cpp \
+		../Donate/search.cpp \
+		../Donate/more.cpp \
+		../Donate/ratio.cpp
 QMAKE_TARGET  = Donate
 DESTDIR       = 
 TARGET        = Donate
@@ -234,7 +252,7 @@ TARGET        = Donate
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_change_college.h ui_change_class.h ui_change_student.h ui_insert_college.h ui_insert_class.h ui_insert_student.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_change_college.h ui_change_class.h ui_change_student.h ui_insert_college.h ui_insert_class.h ui_insert_student.h ui_search.h ui_more.h ui_ratio.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../Donate/Donate.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -519,9 +537,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Donate/mainwindow.h ../Donate/donate.h ../Donate/change_college.h ../Donate/change_class.h ../Donate/change_student.h ../Donate/insert_college.h ../Donate/insert_class.h ../Donate/insert_student.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Donate/main.cpp ../Donate/mainwindow.cpp ../Donate/donate.cpp ../Donate/change_college.cpp ../Donate/change_class.cpp ../Donate/change_student.cpp ../Donate/insert_college.cpp ../Donate/insert_class.cpp ../Donate/insert_student.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Donate/mainwindow.ui ../Donate/change_college.ui ../Donate/change_class.ui ../Donate/change_student.ui ../Donate/insert_college.ui ../Donate/insert_class.ui ../Donate/insert_student.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Donate/mainwindow.h ../Donate/donate.h ../Donate/change_college.h ../Donate/change_class.h ../Donate/change_student.h ../Donate/insert_college.h ../Donate/insert_class.h ../Donate/insert_student.h ../Donate/search.h ../Donate/more.h ../Donate/ratio.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Donate/main.cpp ../Donate/mainwindow.cpp ../Donate/donate.cpp ../Donate/change_college.cpp ../Donate/change_class.cpp ../Donate/change_student.cpp ../Donate/insert_college.cpp ../Donate/insert_class.cpp ../Donate/insert_student.cpp ../Donate/search.cpp ../Donate/more.cpp ../Donate/ratio.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Donate/mainwindow.ui ../Donate/change_college.ui ../Donate/change_class.ui ../Donate/change_student.ui ../Donate/insert_college.ui ../Donate/insert_class.ui ../Donate/insert_student.ui ../Donate/search.ui ../Donate/more.ui ../Donate/ratio.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -553,9 +571,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_change_college.cpp moc_change_class.cpp moc_change_student.cpp moc_insert_college.cpp moc_insert_class.cpp moc_insert_student.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_change_college.cpp moc_change_class.cpp moc_change_student.cpp moc_insert_college.cpp moc_insert_class.cpp moc_insert_student.cpp moc_search.cpp moc_more.cpp moc_ratio.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_change_college.cpp moc_change_class.cpp moc_change_student.cpp moc_insert_college.cpp moc_insert_class.cpp moc_insert_student.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_change_college.cpp moc_change_class.cpp moc_change_student.cpp moc_insert_college.cpp moc_insert_class.cpp moc_insert_student.cpp moc_search.cpp moc_more.cpp moc_ratio.cpp
 moc_mainwindow.cpp: ../Donate/donate.h \
 		../Donate/change_college.h \
 		../Donate/change_class.h \
@@ -563,6 +581,9 @@ moc_mainwindow.cpp: ../Donate/donate.h \
 		../Donate/insert_college.h \
 		../Donate/insert_class.h \
 		../Donate/insert_student.h \
+		../Donate/search.h \
+		../Donate/ratio.h \
+		../Donate/more.h \
 		../Donate/mainwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
@@ -598,11 +619,26 @@ moc_insert_student.cpp: ../Donate/insert_student.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/insert_student.h -o moc_insert_student.cpp
 
+moc_search.cpp: ../Donate/search.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/search.h -o moc_search.cpp
+
+moc_more.cpp: ../Donate/more.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/more.h -o moc_more.cpp
+
+moc_ratio.cpp: ../Donate/ratio.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/ratio.h -o moc_ratio.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_change_college.h ui_change_class.h ui_change_student.h ui_insert_college.h ui_insert_class.h ui_insert_student.h
+compiler_uic_make_all: ui_mainwindow.h ui_change_college.h ui_change_class.h ui_change_student.h ui_insert_college.h ui_insert_class.h ui_insert_student.h ui_search.h ui_more.h ui_ratio.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_change_college.h ui_change_class.h ui_change_student.h ui_insert_college.h ui_insert_class.h ui_insert_student.h
+	-$(DEL_FILE) ui_mainwindow.h ui_change_college.h ui_change_class.h ui_change_student.h ui_insert_college.h ui_insert_class.h ui_insert_student.h ui_search.h ui_more.h ui_ratio.h
 ui_mainwindow.h: ../Donate/mainwindow.ui \
 		/usr/bin/uic
 	/usr/bin/uic ../Donate/mainwindow.ui -o ui_mainwindow.h
@@ -631,6 +667,18 @@ ui_insert_student.h: ../Donate/insert_student.ui \
 		/usr/bin/uic
 	/usr/bin/uic ../Donate/insert_student.ui -o ui_insert_student.h
 
+ui_search.h: ../Donate/search.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../Donate/search.ui -o ui_search.h
+
+ui_more.h: ../Donate/more.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../Donate/more.ui -o ui_more.h
+
+ui_ratio.h: ../Donate/ratio.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../Donate/ratio.ui -o ui_ratio.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
@@ -648,7 +696,10 @@ main.o: ../Donate/main.cpp ../Donate/mainwindow.h \
 		../Donate/change_student.h \
 		../Donate/insert_college.h \
 		../Donate/insert_class.h \
-		../Donate/insert_student.h
+		../Donate/insert_student.h \
+		../Donate/search.h \
+		../Donate/ratio.h \
+		../Donate/more.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Donate/main.cpp
 
 mainwindow.o: ../Donate/mainwindow.cpp ../Donate/mainwindow.h \
@@ -659,6 +710,9 @@ mainwindow.o: ../Donate/mainwindow.cpp ../Donate/mainwindow.h \
 		../Donate/insert_college.h \
 		../Donate/insert_class.h \
 		../Donate/insert_student.h \
+		../Donate/search.h \
+		../Donate/ratio.h \
+		../Donate/more.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Donate/mainwindow.cpp
 
@@ -689,6 +743,18 @@ insert_student.o: ../Donate/insert_student.cpp ../Donate/insert_student.h \
 		ui_insert_student.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o insert_student.o ../Donate/insert_student.cpp
 
+search.o: ../Donate/search.cpp ../Donate/search.h \
+		ui_search.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o search.o ../Donate/search.cpp
+
+more.o: ../Donate/more.cpp ../Donate/more.h \
+		ui_more.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o more.o ../Donate/more.cpp
+
+ratio.o: ../Donate/ratio.cpp ../Donate/ratio.h \
+		ui_ratio.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ratio.o ../Donate/ratio.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
@@ -709,6 +775,15 @@ moc_insert_class.o: moc_insert_class.cpp
 
 moc_insert_student.o: moc_insert_student.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_insert_student.o moc_insert_student.cpp
+
+moc_search.o: moc_search.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_search.o moc_search.cpp
+
+moc_more.o: moc_more.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_more.o moc_more.cpp
+
+moc_ratio.o: moc_ratio.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ratio.o moc_ratio.cpp
 
 ####### Install
 

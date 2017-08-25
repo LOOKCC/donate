@@ -33,8 +33,8 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void Show_tree(struct college_info* head);
-    void Show_info();
+    void Show_tree();
+
 
     ~MainWindow();
 
@@ -54,14 +54,25 @@ private:
     struct college_info* head;
 private slots:
     void Mouse_position(QTreeWidgetItem* item);
-    void Insert();
+    void Show_info(QTreeWidgetItem* ,int);
+    void Insert_Show();
     void Delete();
-    void Change();
+    void Change_Show();
     void Sort_student();
     void Sort_donate();
     void More_than();
     void Ratio();
-    void Search_class();
+    void Search_Class_show();
+    void Insert_College();
+    void Insert_Class();
+    void Insert_Student();
+    void Change_College();
+    void Change_Class();
+    void Change_Student();
+    void Search_Class();
+    void Create_College();
+    void Create_Class();
+    void Create_Student();
 };
 
 #endif // MAINWINDOW_H
