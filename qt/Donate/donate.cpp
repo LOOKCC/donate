@@ -506,15 +506,19 @@ struct college_info* Insert_student(struct student_info temp_info,struct college
     return head;
 }
 struct college_info* delete_college(struct college_info* head, int nco){
-    int now = 1;
     struct college_info* temp = head, *pre = head;
-    while(nco - 1>  now){
-        temp = temp-> next;
-        pre = pre->next;
-        now++;
+    if(nco == 0){
+        head = head->next;
     }
-    temp = temp->next;
-    pre->next = temp->next;
+    else{
+        while(nco > 1){
+            temp = temp-> next;
+            pre = pre->next;
+            nco--;
+        }
+        temp = temp->next;
+        pre->next = temp->next;
+    }
     struct class_info* class_temp = temp->class_head;
     struct class_info* class_now;
     while(class_temp != NULL){
@@ -533,21 +537,24 @@ struct college_info* delete_college(struct college_info* head, int nco){
     return head;
 }
 struct college_info* delete_class(struct college_info* head, int nco, int ncl){
-    int now_co = 1;
-    int now_cl = 1;
     struct college_info* college_temp = head;
-    while(nco > now_co){
+    while(nco > 0){
         college_temp = college_temp->next;
-        now_co++;
+        nco--;
     }
     struct class_info* class_temp = college_temp->class_head, *class_pre = college_temp->class_head;
-    while(ncl - 1 > now_cl){
+    if(ncl == 0){
+        college_temp->class_head= college_temp->class_head->next;
+    }else{
+        while(ncl  > 1){
+            class_temp = class_temp->next;
+            class_pre = class_pre->next;
+            ncl--;
+        }
         class_temp = class_temp->next;
-        class_pre = class_pre->next;
-        now_cl++;
+        class_pre->next = class_temp->next;
     }
-    class_temp = class_temp->next;
-    class_pre->next = class_temp->next;
+
     struct student_info* student_temp = class_temp->student_head;
     struct student_info* student_now;
     while(student_temp != NULL){
@@ -559,27 +566,29 @@ struct college_info* delete_class(struct college_info* head, int nco, int ncl){
     return head;
 }
 struct college_info* delete_student(struct college_info* head, int nco, int ncl,int nst){
-    int now_co = 1;
-    int now_cl = 1;
-    int now_st = 1;
     struct college_info* college_temp = head;
-    while(nco > now_co){
+    while(nco > 0){
         college_temp = college_temp->next;
-        now_co++;
+        nco--;
     }
     struct class_info* class_temp = college_temp->class_head;
-    while(ncl > now_cl){
+    while(ncl > 0){
         class_temp = class_temp->next;
-        now_cl++;
+        ncl--;
     }
     struct student_info* student_temp = class_temp->student_head, *student_pre = class_temp->student_head;
-    while(nst - 1> now_st){
-        student_temp = student_temp->next;
-        student_pre = student_pre->next;
-        now_st++;
+    if(nst == 0){
+        class_temp->student_head = class_temp->student_head->next;
     }
-    student_temp = student_temp->next;
-    student_pre->next = student_temp->next;
+    else{
+        while(nst > 1){
+            student_temp = student_temp->next;
+            student_pre = student_pre->next;
+            nst--;
+        }
+        student_temp = student_temp->next;
+        student_pre->next = student_temp->next;
+    }
     free(student_temp);
     return head;
 }
@@ -759,13 +768,13 @@ void student_total(struct college_info* head){
         temp = temp->next;
     }
 }
-void college_donate_sort(struct college_info* head){
+struct college_info* college_donate_sort(struct college_info* head){
     int length = college_length(head);
-    struct college_info* pre = head;
-    struct college_info* now = head;
-    struct college_info* after = head->next;
     int flag = 1;
-    for(int i = 0; i < length && flag; ++i){
+    for(int i = 1; (i < length) && flag; ++i){
+        struct college_info* pre = head;
+        struct college_info* now = head;
+        struct college_info* after = head->next;
         flag = 0;
         if(now->total_donate < after->total_donate){
             pre->next = after->next;
@@ -773,6 +782,7 @@ void college_donate_sort(struct college_info* head){
             now = pre;
             pre = after;
             after = now->next;
+            head = pre;
             flag = 1;
         }else{
             now = after;
@@ -791,17 +801,17 @@ void college_donate_sort(struct college_info* head){
                 now = now->next;
                 after = after->next;
             }
-
         }
     }
+    return head;
 }
-void class_donate_sort(struct class_info* head){
+struct class_info* class_donate_sort(struct class_info* head){
     int length = class_length(head);
-    struct class_info* pre = head;
-    struct class_info* now = head;
-    struct class_info* after = head->next;
     int flag = 1;
-    for(int i = 0; i < length && flag; ++i){
+    for(int i = 1; i < length && flag; ++i){
+        struct class_info* pre = head;
+        struct class_info* now = head;
+        struct class_info* after = head->next;
         flag = 0;
         if(now->total_donate < after->total_donate){
             pre->next = after->next;
@@ -809,6 +819,7 @@ void class_donate_sort(struct class_info* head){
             now = pre;
             pre = after;
             after = now->next;
+            head = pre;
             flag = 1;
         }else{
             now = after;
@@ -827,17 +838,17 @@ void class_donate_sort(struct class_info* head){
                 now = now->next;
                 after = after->next;
             }
-
         }
     }
+    return head;
 }
-void college_student_sort(struct college_info* head){
+struct college_info* college_student_sort(struct college_info* head){
     int length = college_length(head);
-    struct college_info* pre = head;
-    struct college_info* now = head;
-    struct college_info* after = head->next;
     int flag = 1;
-    for(int i = 0; i < length && flag; ++i){
+    for(int i = 1; (i < length) && flag; ++i){
+        struct college_info* pre = head;
+        struct college_info* now = head;
+        struct college_info* after = head->next;
         flag = 0;
         if(now->total_student < after->total_student){
             pre->next = after->next;
@@ -845,6 +856,7 @@ void college_student_sort(struct college_info* head){
             now = pre;
             pre = after;
             after = now->next;
+            head = pre;
             flag = 1;
         }else{
             now = after;
@@ -866,14 +878,15 @@ void college_student_sort(struct college_info* head){
 
         }
     }
+    return head;
 }
-void class_student_sort(struct class_info* head){
+struct class_info* class_student_sort(struct class_info* head){
     int length = class_length(head);
-    struct class_info* pre = head;
-    struct class_info* now = head;
-    struct class_info* after = head->next;
     int flag = 1;
-    for(int i = 0; i < length && flag; ++i){
+    for(int i = 1; i < length && flag; ++i){
+        struct class_info* pre = head;
+        struct class_info* now = head;
+        struct class_info* after = head->next;
         flag = 0;
         if(now->total_student < after->total_student){
             pre->next = after->next;
@@ -881,6 +894,7 @@ void class_student_sort(struct class_info* head){
             now = pre;
             pre = after;
             after = now->next;
+            head = pre;
             flag = 1;
         }else{
             now = after;
@@ -902,22 +916,26 @@ void class_student_sort(struct class_info* head){
 
         }
     }
+    return head;
 }
-void sort_donate_all(struct college_info* head){
+struct college_info* sort_donate_all(struct college_info* head){
     donate_total(head);
     struct college_info* temp = head;
     while(temp != NULL){
-        class_donate_sort(temp->class_head);
+        temp->class_head = class_donate_sort(temp->class_head);
         temp = temp->next;
     }
-    college_donate_sort(head);
+    head = college_donate_sort(head);
+    return head;
 }
-void sort_student_all(struct college_info* head){
+struct college_info* sort_student_all(struct college_info* head){
     student_total(head);
     struct college_info* temp = head;
     while(temp != NULL){
-        class_student_sort(temp->class_head);
+        temp->class_head = class_student_sort(temp->class_head);
         temp = temp->next;
     }
-    college_student_sort(head);
+    head = college_student_sort(head);
+
+    return head;
 }

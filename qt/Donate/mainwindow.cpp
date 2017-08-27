@@ -59,14 +59,14 @@ MainWindow::MainWindow(QWidget *parent) :
     struct college_info temp1;
     temp1.class_head = NULL;
     temp1.next = NULL;
-    strcpy(temp1.college_name ,"hust");
+    strcpy(temp1.college_name ,"CS");
     strcpy(temp1.person_name , "wzh");
     strcpy(temp1.phone_number , "123456");
     struct class_info temp2;
     strcpy(temp2.class_ID , "01");
     temp2.grade = 16;
     temp2.person_number = 29;
-    strcpy(temp2.college_name , "hust");
+    strcpy(temp2.college_name , "CS");
     strcpy(temp2.counselor , "hhh");
     temp2.student_head = NULL;
     temp2.next = NULL;
@@ -369,12 +369,14 @@ void MainWindow::Change_Student(){
 }
 
 void MainWindow::Sort_student(){
-    sort_student_all(head);
+    qDebug()<<"he";
+    head = sort_student_all(head);
+    qDebug()<<"here";
     QMessageBox::information(NULL,"Information","Sorted by student",QMessageBox::Ok);
     Show_tree();
 }
 void MainWindow::Sort_donate(){
-    sort_donate_all(head);
+    head = sort_donate_all(head);
     QMessageBox::information(NULL,"Information","Sorted by donate",QMessageBox::Ok);
     Show_tree();
 }

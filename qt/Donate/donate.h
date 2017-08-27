@@ -2,6 +2,7 @@
 #define DONATE_H
 
 //#define N 3
+#include <QDebug>
 const int N = 3;
 struct college_info
 {
@@ -79,10 +80,10 @@ void class_student_total(struct class_info* head);
 void college_student_total(struct college_info* head);
 void student_total(struct college_info* head);
 //sort
-void college_donate_sort(struct college_info* head);
-void class_donate_sort(struct class_info* head);
-void college_student_sort(struct college_info* head);
-void class_student_sort(struct class_info* head);
-void sort_donate_all(struct college_info* head);
-void sort_student_all(struct college_info* head);
+struct college_info* college_donate_sort(struct college_info* head);
+struct class_info* class_donate_sort(struct class_info* head);
+struct college_info* college_student_sort(struct college_info* head);
+struct class_info* class_student_sort(struct class_info* head);
+struct college_info* sort_donate_all(struct college_info* head);
+struct college_info* sort_student_all(struct college_info* head);
 #endif // DONATE_H
