@@ -34,11 +34,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     void Show_tree();
-
-
     ~MainWindow();
-
-
 private:
     Ui::MainWindow *ui;
     change_college* change_college_win;

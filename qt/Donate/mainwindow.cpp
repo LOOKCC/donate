@@ -55,12 +55,33 @@ MainWindow::MainWindow(QWidget *parent) :
     //search
     connect(search_win,SIGNAL(accepted()),this,SLOT(Search_Class()));
 
-//donate
-    //head = create_with_file("");
-    //Show_tree();
+    //for test
+    struct college_info temp1;
+    temp1.class_head = NULL;
+    temp1.next = NULL;
+    strcpy(temp1.college_name ,"hust");
+    strcpy(temp1.person_name , "wzh");
+    strcpy(temp1.phone_number , "123456");
+    struct class_info temp2;
+    strcpy(temp2.class_ID , "01");
+    temp2.grade = 16;
+    temp2.person_number = 29;
+    strcpy(temp2.college_name , "hust");
+    strcpy(temp2.counselor , "hhh");
+    temp2.student_head = NULL;
+    temp2.next = NULL;
+    struct student_info temp3;
+    strcpy(temp3.name , "wang");
+    strcpy(temp3.ID , "U2016");
+    temp3.gender = 'm';
+    temp3.age = 19;
+    temp3.money = 14.3f;
+    temp3.next = NULL;
+    head = create_college(temp1,head);
+    head = create_class(temp2,head,0);
+    head = create_student(temp3,head,0,0);
+
 }
-
-
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -80,18 +101,19 @@ void MainWindow::Mouse_position(QTreeWidgetItem* item){
     qDebug()<<now_index[0]<<now_index[1]<<now_index[2];
 }
 void MainWindow::Show_tree(){
+    ui->treeWidget->clear();
     qDebug()<<"show_tree_begin";
     QTreeWidgetItem *All = new QTreeWidgetItem(ui->treeWidget,QStringList(QString("All")));
     //for test
-    QTreeWidgetItem *test = new QTreeWidgetItem(All,QStringList(QString("test")));
-    All->addChild(test);
+    //QTreeWidgetItem *test = new QTreeWidgetItem(All,QStringList(QString("test")));
+    //All->addChild(test);
     struct college_info* college_temp = head;
     while(college_temp != NULL){
         QTreeWidgetItem *college = new QTreeWidgetItem(QStringList(QString(college_temp->college_name)));
         All->addChild(college);
         struct class_info* class_temp = college_temp->class_head;
         while(class_temp != NULL){
-            QTreeWidgetItem *clas_s = new QTreeWidgetItem(QStringList(QString(class_temp->grade) + QString(class_temp->class_ID)));
+            QTreeWidgetItem *clas_s = new QTreeWidgetItem(QStringList(QString::number(class_temp->grade, 10) + QString(class_temp->class_ID)));
             college->addChild((clas_s));
             struct student_info* student_temp = class_temp->student_head;
             while(student_temp != NULL){
@@ -123,10 +145,14 @@ void MainWindow::Show_info(QTreeWidgetItem* item,int n){
         ui->tableWidget->setItem(0, 0, new QTableWidgetItem("college_name"));
         ui->tableWidget->setItem(1, 0, new QTableWidgetItem("person_name"));
         ui->tableWidget->setItem(2, 0, new QTableWidgetItem("phone_number"));
+        ui->tableWidget->setItem(3, 0, new QTableWidgetItem(" "));
+        ui->tableWidget->setItem(4, 0, new QTableWidgetItem(" "));
 
         ui->tableWidget->setItem(0, 1, new QTableWidgetItem(QString(college_temp->college_name)));
         ui->tableWidget->setItem(1, 1, new QTableWidgetItem(QString(college_temp->person_name)));
         ui->tableWidget->setItem(2, 1, new QTableWidgetItem(QString(college_temp->phone_number)));
+        ui->tableWidget->setItem(3, 1, new QTableWidgetItem(" "));
+        ui->tableWidget->setItem(4, 1, new QTableWidgetItem(" "));
     }
     //class
     if(now_index[0] != -1 && now_index[1] != -1 && now_index[2] == -1){
@@ -148,8 +174,8 @@ void MainWindow::Show_info(QTreeWidgetItem* item,int n){
         ui->tableWidget->setItem(4, 0, new QTableWidgetItem("counselor"));
 
         ui->tableWidget->setItem(0, 1, new QTableWidgetItem(QString(class_temp->class_ID)));
-        ui->tableWidget->setItem(1, 1, new QTableWidgetItem(QString(class_temp->grade)));
-        ui->tableWidget->setItem(2, 1, new QTableWidgetItem(QString(class_temp->person_number)));
+        ui->tableWidget->setItem(1, 1, new QTableWidgetItem(QString::number(class_temp->grade, 10)));
+        ui->tableWidget->setItem(2, 1, new QTableWidgetItem(QString::number(class_temp->person_number, 10)));
         ui->tableWidget->setItem(3, 1, new QTableWidgetItem(QString(class_temp->college_name)));
         ui->tableWidget->setItem(4, 1, new QTableWidgetItem(QString(class_temp->counselor)));
 
@@ -180,8 +206,8 @@ void MainWindow::Show_info(QTreeWidgetItem* item,int n){
         ui->tableWidget->setItem(0, 1, new QTableWidgetItem(QString(student_temp->name)));
         ui->tableWidget->setItem(1, 1, new QTableWidgetItem(QString(student_temp->ID)));
         ui->tableWidget->setItem(2, 1, new QTableWidgetItem(QString(student_temp->gender)));
-        ui->tableWidget->setItem(3, 1, new QTableWidgetItem(student_temp->age));
-        ui->tableWidget->setItem(4, 1, new QTableWidgetItem(student_temp->money));
+        ui->tableWidget->setItem(3, 1, new QTableWidgetItem(QString::number(student_temp->age, 10)));
+        ui->tableWidget->setItem(4, 1, new QTableWidgetItem( QString("%1").arg(student_temp->money)));
     }
 }
 void MainWindow::Insert_Show(){
@@ -214,6 +240,7 @@ void MainWindow::Insert_College(){
     QByteArray ba3 = phone_number.toLatin1();
     strcpy(temp.phone_number,ba3.data());
     head = Insert_college(temp,head,now_index[0]);
+    Show_tree();
 }
 void MainWindow::Insert_Class(){
     QString class_ID = insert_class_win->get_class_ID();
@@ -231,6 +258,7 @@ void MainWindow::Insert_Class(){
     QByteArray ba3 = counselor.toLatin1();
     strcpy(temp.counselor,ba3.data());
     head = Insert_class(temp,head,now_index[1],now_index[0]);
+    Show_tree();
 }
 void MainWindow::Insert_Student(){
     QString name = insert_student_win->get_name();
@@ -247,6 +275,7 @@ void MainWindow::Insert_Student(){
     temp.age = age;
     temp.money = money;
     head = Insert_student(temp,head,now_index[2],now_index[1],now_index[0]);
+    Show_tree();
 }
 void MainWindow::Delete(){
     //nothig
@@ -256,14 +285,17 @@ void MainWindow::Delete(){
     //college
     if(now_index[0] != -1 && now_index[1] == -1 && now_index[2] == -1){
         head = delete_college(head,now_index[0]);
+        Show_tree();
     }
     //class
     if(now_index[0] != -1 && now_index[1] != -1 && now_index[2] == -1){
         head = delete_class(head,now_index[1],now_index[0]);
+        Show_tree();
     }
     //student
     if(now_index[0] != -1 && now_index[1] != -1 && now_index[2] != -1){
         head = delete_student(head,now_index[2],now_index[1],now_index[0]);
+        Show_tree();
     }
 }
 void MainWindow::Change_Show(){
@@ -296,6 +328,7 @@ void MainWindow::Change_College(){
     QByteArray ba3 = phone_number.toLatin1();
     strcpy(temp.phone_number,ba3.data());
     head = Change_college(temp,head,now_index[0]);
+    Show_tree();
 }
 
 void MainWindow::Change_Class(){
@@ -314,6 +347,7 @@ void MainWindow::Change_Class(){
     QByteArray ba3 = counselor.toLatin1();
     strcpy(temp.counselor,ba3.data());
     head = Change_class(temp,head,now_index[1],now_index[0]);
+    Show_tree();
 }
 
 void MainWindow::Change_Student(){
@@ -331,15 +365,18 @@ void MainWindow::Change_Student(){
     temp.age = age;
     temp.money = money;
     head = Change_student(temp,head,now_index[2],now_index[1],now_index[0]);
+    Show_tree();
 }
 
 void MainWindow::Sort_student(){
     sort_student_all(head);
     QMessageBox::information(NULL,"Information","Sorted by student",QMessageBox::Ok);
+    Show_tree();
 }
 void MainWindow::Sort_donate(){
     sort_donate_all(head);
     QMessageBox::information(NULL,"Information","Sorted by donate",QMessageBox::Ok);
+    Show_tree();
 }
 void MainWindow::More_than(){
     struct college_info* temp_college = head;
