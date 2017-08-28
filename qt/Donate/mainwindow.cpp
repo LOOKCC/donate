@@ -369,9 +369,7 @@ void MainWindow::Change_Student(){
 }
 
 void MainWindow::Sort_student(){
-    qDebug()<<"he";
     head = sort_student_all(head);
-    qDebug()<<"here";
     QMessageBox::information(NULL,"Information","Sorted by student",QMessageBox::Ok);
     Show_tree();
 }
@@ -410,43 +408,42 @@ void MainWindow::Ratio(){
             while(temp_class != NULL){
                 struct student_info* temp_student = temp_class->student_head;
                 while(temp_student != NULL){
-                    total_number[temp_class->grade-14]++;
+                    qDebug()<<temp_class->grade;
+                    total_number[(temp_class->grade)-14]++;
                     if(temp_student->money > 0.0f){
-                        money_number[temp_class->grade-14]++;
+                        money_number[(temp_class->grade)-14]++;
                     }
                     temp_student = temp_student->next;
                 }
                 temp_class = temp_class->next;
             }
         }
-        else{
-            temp_college = temp_college->next;
-        }
+        temp_college = temp_college->next;
     }
     float res[4];
-    float temp_ratio[4];
+    int temp_grade[4] = {14,15,16,17};
     for(int i = 0; i < 4; ++i){
-        res[i] = money_number[i]/total_number[i];
-        temp_ratio[i] = res[i];
+        if(total_number[i] != 0){
+            res[i] = money_number[i]/total_number[i];
+        }else{
+            res[i] = 0;
+        }
     }
     for(int i = 0; i < 4; ++i){
         for(int j = 0; j < 3 ; ++j){
-            if(temp_ratio[j] < temp_ratio[j+1]){
-                float change = temp_ratio[j];
-                temp_ratio[j] = temp_ratio[j+1];
-                temp_ratio[j+1] = change;
+            if(res[j] < res[j+1]){
+                float change_r = res[j];
+                res[j] = res[j+1];
+                res[j+1] = change_r;
+                int change_d = temp_grade[j];
+                temp_grade[j] = temp_grade[j+1];
+                temp_grade[j+1] = change_d;
             }
         }
     }
     for(int i = 0; i < 4; ++i){
-        int position;
-        for(int j = 0; j < 4; ++j){
-            if(res[j] == temp_ratio[i]){
-                position = j;
-            }
-        }
-        QString s1 = QString::number(position+14, 10);
-        QString s2 = QString("%1").arg(temp_ratio[i]);
+        QString s1 = QString::number(temp_grade[i], 10);
+        QString s2 = QString("%1").arg(res[i]);
         //QString s2 = QString::number(temp_ratio[i], 10);
         ratio_win->set_grade(i,0,s1);
         ratio_win->set_grade(i,1,s2);
@@ -460,7 +457,7 @@ void MainWindow::Search_Class(){
     QString class_ID = search_win->get_class_ID();
     QByteArray ba1 = class_ID.toLatin1();
     char* class_ID_char;
-    strcpy(class_ID_char,ba1.data());
+    class_ID_char = ba1.data();
     int grade = search_win->get_grade();
     if(search_CS_class(head,grade,class_ID_char)){
         QMessageBox::information(NULL,"Information","Find",QMessageBox::Ok);
