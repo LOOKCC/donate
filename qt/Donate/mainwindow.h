@@ -43,12 +43,17 @@ private:
     insert_college* insert_college_win;
     insert_class* insert_class_win;
     insert_student* insert_student_win;
+    insert_college* create_college_win;
+    insert_class* create_class_win;
+    insert_student* create_student_win;
     Search* search_win;
     ratio* ratio_win;
     more* more_win;
     int now_index[3];
     struct college_info* head;
 private slots:
+    void Load();
+    void Save();
     void Mouse_position(QTreeWidgetItem* item);
     void Show_info(QTreeWidgetItem* ,int);
     void Insert_Show();
@@ -66,9 +71,10 @@ private slots:
     void Change_Class();
     void Change_Student();
     void Search_Class();
-    //void Create_College();
-    //void Create_Class();
-    //void Create_Student();
+    void Create_Show();
+    void Create_College();
+    void Create_Class();
+    void Create_Student();
 };
 
 #endif // MAINWINDOW_H

@@ -260,6 +260,9 @@ void save (struct college_info* head){
 }
 */
 struct college_info* create_college(struct college_info temp, struct college_info* head){
+    if(head != NULL){
+        return head;
+    }
     struct college_info* college_new = (struct  college_info*)malloc(sizeof(struct college_info));
     college_new->class_head = NULL;
     college_new->next = NULL;
@@ -273,6 +276,9 @@ struct college_info* create_class(struct class_info temp_info, struct college_in
     struct college_info* temp = head;
     for(int i = 0; i < n ; ++i){
         temp = temp->next;
+    }
+    if(temp->class_head != NULL){
+        return head;
     }
     struct class_info* class_new = (struct  class_info*)malloc(sizeof(struct class_info));
     strcpy(class_new->class_ID , temp_info.class_ID);
@@ -293,6 +299,9 @@ struct college_info* create_student(struct student_info temp_info, struct colleg
     struct class_info* class_temp = college_temp->class_head;
     for(int i = 0; i < n2; ++i){
         class_temp = class_temp->next;
+    }
+    if(class_temp->student_head != NULL){
+        return head;
     }
     struct student_info* student_new = (struct student_info*)malloc(sizeof(struct student_info));
     strcpy(student_new->name , temp_info.name);

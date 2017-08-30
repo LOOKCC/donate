@@ -27,32 +27,41 @@ MainWindow::MainWindow(QWidget *parent) :
     insert_college_win = new insert_college(this);
     insert_class_win = new insert_class(this);
     insert_student_win = new insert_student(this);
+    create_college_win = new insert_college(this);
+    create_class_win = new insert_class(this);
+    create_student_win = new insert_student(this);
     more_win = new more(this);
     ratio_win = new ratio(this);
     search_win = new Search(this);
 
 
 //qt connect
+    //connect(ui->action_Open,SIGNAL(clicked()),this,SLOT(Load()));
+    //connect(ui->action_Save,SIGNAL(clicked()),this,SLOT(Save()));
     connect(ui->treeWidget,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(Show_info(QTreeWidgetItem* ,int)));
-
-    connect(ui->insertButton,SIGNAL(clicked()),this,SLOT(Insert_Show()));
-    connect(ui->changeButton,SIGNAL(clicked()),this,SLOT(Change_Show()));
-    connect(ui->deleteButton,SIGNAL(clicked()),this,SLOT(Delete()));
-
     connect(ui->sortsButton,SIGNAL(clicked()),this,SLOT(Sort_student()));
     connect(ui->sortdButton,SIGNAL(clicked()),this,SLOT(Sort_donate()));
     connect(ui->moreButton,SIGNAL(clicked()),this,SLOT(More_than()));
-    connect(ui->searchButton,SIGNAL(clicked()),this,SLOT(Search_Class_show()));
     connect(ui->ratioButton,SIGNAL(clicked()),this,SLOT(Ratio()));
     //change
+    connect(ui->changeButton,SIGNAL(clicked()),this,SLOT(Change_Show()));
     connect(change_college_win,SIGNAL(accepted()),this,SLOT(Change_College()));
     connect(change_class_win,SIGNAL(accepted()),this,SLOT(Change_Class()));
     connect(change_student_win,SIGNAL(accepted()),this,SLOT(Change_Student()));
     //insert
+    connect(ui->insertButton,SIGNAL(clicked()),this,SLOT(Insert_Show()));
     connect(insert_college_win,SIGNAL(accepted()),this,SLOT(Insert_College()));
     connect(insert_class_win,SIGNAL(accepted()),this,SLOT(Insert_Class()));
     connect(insert_student_win,SIGNAL(accepted()),this,SLOT(Insert_Student()));
+    //deldete
+    connect(ui->deleteButton,SIGNAL(clicked()),this,SLOT(Delete()));
+    //create
+    connect(ui->createButton,SIGNAL(clicked()),this,SLOT(Create_Show()));
+    connect(create_college_win,SIGNAL(accepted()),this,SLOT(Create_College()));
+    connect(create_class_win,SIGNAL(accepted()),this,SLOT(Create_College()));
+    connect(create_student_win,SIGNAL(accepted()),this,SLOT(Create_Student()));
     //search
+    connect(ui->searchButton,SIGNAL(clicked()),this,SLOT(Search_Class_show()));
     connect(search_win,SIGNAL(accepted()),this,SLOT(Search_Class()));
 
     //for test
@@ -86,6 +95,13 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::Save(){
+    qDebug()<<"save";
+}
+void MainWindow::Load(){
+    qDebug()<<"load";
+}
+
 void MainWindow::Mouse_position(QTreeWidgetItem* item){
     now_index[0] = -1;
     now_index[1] = -1;
@@ -465,4 +481,71 @@ void MainWindow::Search_Class(){
     else {
         QMessageBox::information(NULL,"Information","Not Find",QMessageBox::Ok);
     }
+}
+void MainWindow::Create_Show(){
+    //create college
+    if(now_index[0] == -1 && now_index[1] == -1 && now_index[2] == -1){
+       create_college_win->show();
+    }
+    //create class
+    if(now_index[0] != -1 && now_index[1] == -1 && now_index[2] == -1){
+        create_class_win->show();
+    }
+    //create student
+    if(now_index[0] != -1 && now_index[1] != -1 && now_index[2] == -1){
+        create_student_win->show();
+    }
+    // nothing
+    if(now_index[0] != -1 && now_index[1] != -1 && now_index[2] != -1){
+        return ;
+    }
+}
+void MainWindow::Create_College(){
+    QString college_name = create_college_win->get_college_name();
+    QString person_name = create_college_win->get_person_name();
+    QString phone_number = create_college_win->get_phone_number();
+    struct college_info temp ;
+    QByteArray ba1 = college_name.toLatin1();
+    strcpy(temp.college_name,ba1.data());
+    QByteArray ba2 = person_name.toLatin1();
+    strcpy(temp.person_name,ba2.data());
+    QByteArray ba3 = phone_number.toLatin1();
+    strcpy(temp.phone_number,ba3.data());
+    head = create_college(temp,head);
+    Show_tree();
+}
+void MainWindow::Create_Class(){
+    QString class_ID = create_class_win->get_class_ID();
+    int grade = create_class_win->get_grade();
+    int person_number = create_class_win->get_person_number();
+    QString college_name = create_class_win->get_college_name();
+    QString counselor = create_class_win->get_counselor();
+    struct class_info temp ;
+    QByteArray ba1 = class_ID.toLatin1();
+    strcpy(temp.class_ID,ba1.data());
+    temp.grade = grade;
+    temp.person_number = person_number;
+    QByteArray ba2 = college_name.toLatin1();
+    strcpy(temp.college_name,ba2.data());
+    QByteArray ba3 = counselor.toLatin1();
+    strcpy(temp.counselor,ba3.data());
+    head = create_class(temp,head,now_index[0]);
+    Show_tree();
+}
+void MainWindow::Create_Student(){
+    QString name = create_student_win->get_name();
+    QString ID = create_student_win->get_ID();
+    QChar gender = create_student_win->get_gender();
+    int age = create_student_win->get_age();
+    float money = create_student_win->get_money();
+    struct student_info temp;
+    QByteArray ba1 = name.toLatin1();
+    strcpy(temp.name,ba1.data());
+    QByteArray ba2 = ID.toLatin1();
+    strcpy(temp.ID,ba2.data());
+    temp.gender = gender.unicode();
+    temp.age = age;
+    temp.money = money;
+    head = create_student(temp,head,now_index[1],now_index[0]);
+    Show_tree();
 }

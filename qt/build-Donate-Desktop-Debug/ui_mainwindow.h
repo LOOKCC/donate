@@ -44,6 +44,10 @@ public:
     QPushButton *deleteButton;
     QPushButton *changeButton;
     QWidget *widget;
+    QVBoxLayout *verticalLayout_3;
+    QHBoxLayout *horizontalLayout_4;
+    QPushButton *createButton;
+    QPushButton *searchButton;
     QVBoxLayout *verticalLayout_2;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_2;
@@ -52,7 +56,6 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QPushButton *moreButton;
     QPushButton *ratioButton;
-    QPushButton *searchButton;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QToolBar *mainToolBar;
@@ -107,12 +110,31 @@ public:
 
         widget = new QWidget(centralWidget);
         widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(550, 490, 198, 104));
-        verticalLayout_2 = new QVBoxLayout(widget);
+        widget->setGeometry(QRect(550, 450, 200, 108));
+        verticalLayout_3 = new QVBoxLayout(widget);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        createButton = new QPushButton(widget);
+        createButton->setObjectName(QStringLiteral("createButton"));
+
+        horizontalLayout_4->addWidget(createButton);
+
+        searchButton = new QPushButton(widget);
+        searchButton->setObjectName(QStringLiteral("searchButton"));
+
+        horizontalLayout_4->addWidget(searchButton);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_4);
+
+        verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
@@ -151,10 +173,8 @@ public:
 
         verticalLayout_2->addLayout(verticalLayout);
 
-        searchButton = new QPushButton(widget);
-        searchButton->setObjectName(QStringLiteral("searchButton"));
 
-        verticalLayout_2->addWidget(searchButton);
+        verticalLayout_3->addLayout(verticalLayout_2);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -190,11 +210,12 @@ public:
         insertButton->setText(QApplication::translate("MainWindow", "Insert", Q_NULLPTR));
         deleteButton->setText(QApplication::translate("MainWindow", "Delete", Q_NULLPTR));
         changeButton->setText(QApplication::translate("MainWindow", "Change", Q_NULLPTR));
+        createButton->setText(QApplication::translate("MainWindow", "Create", Q_NULLPTR));
+        searchButton->setText(QApplication::translate("MainWindow", "Search", Q_NULLPTR));
         sortsButton->setText(QApplication::translate("MainWindow", "Sort_student", Q_NULLPTR));
         sortdButton->setText(QApplication::translate("MainWindow", "Sort_donate", Q_NULLPTR));
         moreButton->setText(QApplication::translate("MainWindow", ">200", Q_NULLPTR));
         ratioButton->setText(QApplication::translate("MainWindow", "Ratio", Q_NULLPTR));
-        searchButton->setText(QApplication::translate("MainWindow", "Search", Q_NULLPTR));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", Q_NULLPTR));
     } // retranslateUi
 
