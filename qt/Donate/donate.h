@@ -47,8 +47,8 @@ struct college_info* create_college(struct college_info temp, struct college_inf
 struct college_info* create_class(struct class_info temp_info, struct college_info* head,int n);
 struct college_info* create_student(struct student_info temp_info, struct college_info* head,int n1,int n2);
 void modify(struct college_info* head);
-bool save(struct college_info* head);
-bool load(struct college_info* head);
+bool save(struct college_info* head,char* college_file_name,char* class_file_name,char*  student_file_name);
+bool load(struct college_info* head,char* college_file_name,char* class_file_name,char*  student_file_name);
 //print
 //void print(struct college_info* head);
 //change

@@ -36,8 +36,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 //qt connect
-    //connect(ui->action_Open,SIGNAL(clicked()),this,SLOT(Load()));
-    //connect(ui->action_Save,SIGNAL(clicked()),this,SLOT(Save()));
+    connect(ui->action_Open,SIGNAL(triggered()),this,SLOT(Load()));
+    connect(ui->action_Save,SIGNAL(triggered()),this,SLOT(Save()));
     connect(ui->treeWidget,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(Show_info(QTreeWidgetItem* ,int)));
     connect(ui->sortsButton,SIGNAL(clicked()),this,SLOT(Sort_student()));
     connect(ui->sortdButton,SIGNAL(clicked()),this,SLOT(Sort_donate()));
@@ -96,10 +96,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 void MainWindow::Save(){
-    qDebug()<<"save";
+    if(save(head,"college.dat","class.dat","student.dat")){
+        QMessageBox::information(NULL,"Information","Save Success",QMessageBox::Ok);
+    }else{
+        QMessageBox::information(NULL,"Information","Save Field",QMessageBox::Ok);
+    }
 }
 void MainWindow::Load(){
-    qDebug()<<"load";
+    if(load(head,"college.dat","class.dat","student.dat")){
+        QMessageBox::information(NULL,"Information","Load Success",QMessageBox::Ok);
+    }else{
+        QMessageBox::information(NULL,"Information","Load Field",QMessageBox::Ok);
+    }
 }
 
 void MainWindow::Mouse_position(QTreeWidgetItem* item){
