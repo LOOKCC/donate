@@ -14,10 +14,13 @@ class insert_college : public QDialog
 
 public:
     explicit insert_college(QWidget *parent = 0);
+    //get
     QString get_college_name();
     QString get_person_name();
     QString get_phone_number();
     ~insert_college();
+    //clear lineedit
+    void Clear();
 
 private:
     Ui::insert_college *ui;

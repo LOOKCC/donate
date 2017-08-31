@@ -16,7 +16,7 @@ class ratio : public QDialog
 public:
     explicit ratio(QWidget *parent = 0);
     ~ratio();
-    void set_grade(int raw,int column,QString info);
+    void set_grade(int raw,int column,QString info);//show every grade ratio
 private:
     Ui::ratio *ui;
 };

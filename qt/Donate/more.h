@@ -15,7 +15,7 @@ class more : public QDialog
 public:
     explicit more(QWidget *parent = 0);
     ~more();
-    void Add_info(QString name, QString money);
+    void Add_info(QString name, QString money);//show name and money
 private:
     Ui::more *ui;
 };

@@ -14,6 +14,7 @@ class Search : public QDialog
 public:
     explicit Search(QWidget *parent = 0);
     ~Search();
+    //get
     QString get_class_ID();
     int get_grade();
 private:

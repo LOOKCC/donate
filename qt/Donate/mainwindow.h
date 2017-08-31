@@ -37,6 +37,7 @@ public:
     ~MainWindow();
 private:
     Ui::MainWindow *ui;
+    //windows
     change_college* change_college_win;
     change_class* change_class_win;
     change_student* change_student_win;
@@ -49,7 +50,9 @@ private:
     Search* search_win;
     ratio* ratio_win;
     more* more_win;
+    //now_index to record the mouse position
     int now_index[3];
+    //globel node
     struct college_info* head;
 private slots:
     void Load();

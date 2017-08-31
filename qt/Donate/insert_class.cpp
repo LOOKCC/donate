@@ -29,3 +29,10 @@ QString insert_class::get_college_name(){
 QString insert_class::get_counselor(){
     return ui->counselor_lineEdit->text();
 }
+void insert_class::Clear(){
+    ui->class_NO_lineEdit->clear();
+    ui->grade_lineEdit->clear();
+    ui->person_number_lineEdit->clear();
+    ui->college_name_lineEdit->clear();
+    ui->counselor_lineEdit->clear();
+}

@@ -15,11 +15,14 @@ class insert_class : public QDialog
 public:
     explicit insert_class(QWidget *parent = 0);
     ~insert_class();
+    //get
     QString get_class_ID();
     int get_grade();
     int get_person_number();
     QString get_college_name();
     QString get_counselor();
+    //clear lineedit
+    void Clear();
 
 private:
     Ui::insert_class *ui;

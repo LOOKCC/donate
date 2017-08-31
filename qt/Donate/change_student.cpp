@@ -30,3 +30,10 @@ float change_student::get_money(){
     QString temp = ui->monet_lineEdit->text();
     return temp.toFloat();
 }
+void change_student::show_info(struct student_info *temp){
+    ui->name_lineEdit->setText(QString(temp->name));
+    ui->ID_lineEdit->setText(QString(temp->ID));
+    ui->gender_lineEdit->setText(QString(temp->gender));
+    ui->age_lineEdit->setText(QString::number(temp->age, 10));
+    ui->monet_lineEdit->setText(QString("%1").arg(temp->money));
+}

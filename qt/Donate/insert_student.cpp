@@ -30,3 +30,10 @@ float insert_student::get_money(){
     QString temp = ui->money_lineEdit->text();
     return temp.toFloat();
 }
+void insert_student::Clear(){
+    ui->name_lineEdit->clear();
+    ui->ID_lineEdit->clear();
+    ui->gender_lineEdit->clear();
+    ui->age_lineEdit->clear();
+    ui->money_lineEdit->clear();
+}

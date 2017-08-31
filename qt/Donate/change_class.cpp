@@ -29,3 +29,10 @@ QString change_class::get_college_name(){
 QString change_class::get_counselor(){
     return ui->counselor_lineEdit->text();
 }
+void change_class::show_info(struct class_info *temp){
+    ui->class_NO_lineEdit->setText(QString(temp->class_ID));
+    ui->grade_lineEdit->setText(QString::number(temp->grade, 10));
+    ui->person_numberlineEdit->setText(QString::number(temp->person_number, 10));
+    ui->college_name_lineEdit->setText(QString(temp->college_name));
+    ui->counselor_lineEdit->setText(QString(temp->counselor));
+}

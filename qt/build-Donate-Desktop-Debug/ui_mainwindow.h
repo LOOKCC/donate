@@ -43,7 +43,7 @@ public:
     QPushButton *insertButton;
     QPushButton *deleteButton;
     QPushButton *changeButton;
-    QWidget *widget;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_4;
     QPushButton *createButton;
@@ -108,10 +108,10 @@ public:
 
         horizontalLayout->addWidget(changeButton);
 
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(550, 450, 200, 108));
-        verticalLayout_3 = new QVBoxLayout(widget);
+        layoutWidget1 = new QWidget(centralWidget);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(550, 450, 200, 108));
+        verticalLayout_3 = new QVBoxLayout(layoutWidget1);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
@@ -119,12 +119,12 @@ public:
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        createButton = new QPushButton(widget);
+        createButton = new QPushButton(layoutWidget1);
         createButton->setObjectName(QStringLiteral("createButton"));
 
         horizontalLayout_4->addWidget(createButton);
 
-        searchButton = new QPushButton(widget);
+        searchButton = new QPushButton(layoutWidget1);
         searchButton->setObjectName(QStringLiteral("searchButton"));
 
         horizontalLayout_4->addWidget(searchButton);
@@ -141,12 +141,12 @@ public:
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        sortsButton = new QPushButton(widget);
+        sortsButton = new QPushButton(layoutWidget1);
         sortsButton->setObjectName(QStringLiteral("sortsButton"));
 
         horizontalLayout_2->addWidget(sortsButton);
 
-        sortdButton = new QPushButton(widget);
+        sortdButton = new QPushButton(layoutWidget1);
         sortdButton->setObjectName(QStringLiteral("sortdButton"));
 
         horizontalLayout_2->addWidget(sortdButton);
@@ -157,12 +157,12 @@ public:
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        moreButton = new QPushButton(widget);
+        moreButton = new QPushButton(layoutWidget1);
         moreButton->setObjectName(QStringLiteral("moreButton"));
 
         horizontalLayout_3->addWidget(moreButton);
 
-        ratioButton = new QPushButton(widget);
+        ratioButton = new QPushButton(layoutWidget1);
         ratioButton->setObjectName(QStringLiteral("ratioButton"));
 
         horizontalLayout_3->addWidget(ratioButton);
@@ -191,7 +191,6 @@ public:
         MainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menu_File->menuAction());
-        menu_File->addAction(action_New);
         menu_File->addAction(action_Save);
         menu_File->addAction(action_Open);
 

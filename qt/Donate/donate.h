@@ -1,7 +1,6 @@
 #ifndef DONATE_H
 #define DONATE_H
 
-//#define N 3
 #include <QDebug>
 const int N = 3;
 struct college_info
@@ -40,17 +39,14 @@ struct student_info
     struct student_info* next;
 };
 
-//create and save
-//struct college_info* create_with_console();
-//struct college_info* create_with_file(char* filename);
+//create
 struct college_info* create_college(struct college_info temp, struct college_info* head);
 struct college_info* create_class(struct class_info temp_info, struct college_info* head,int n);
 struct college_info* create_student(struct student_info temp_info, struct college_info* head,int n1,int n2);
+//load and save
 void modify(struct college_info* head);
 bool save(struct college_info* head,char* college_file_name,char* class_file_name,char*  student_file_name);
-bool load(struct college_info* head,char* college_file_name,char* class_file_name,char*  student_file_name);
-//print
-//void print(struct college_info* head);
+struct college_info* load(struct college_info* head,char* college_file_name,char* class_file_name,char*  student_file_name);
 //change
 struct college_info* Change_college(struct college_info temp_info ,struct college_info* head, int nco);
 struct college_info* Change_class(struct class_info temp_info ,struct college_info* head,  int nco, int ncl);
@@ -64,9 +60,6 @@ struct college_info* delete_college(struct college_info* head, int nco);
 struct college_info* delete_class(struct college_info* head, int nco, int ncl);
 struct college_info* delete_student(struct college_info* head, int nco, int ncl,int nst);
 //search
-void search_college(struct college_info* head, char* college_name, int position[]);
-void search_class(struct college_info* head, char* college_name, char* class_ID, int position);
-void search_student(struct college_info* head, char* college_name, char* class_ID, char* name, int position[]);
 bool search_CS_class(struct college_info* head,int grade,char* class_ID);
 //length
 int college_length(struct college_info* head);
@@ -79,11 +72,12 @@ void donate_total(struct college_info* head);
 void class_student_total(struct class_info* head);
 void college_student_total(struct college_info* head);
 void student_total(struct college_info* head);
-//sort
+//sort by donate
 struct college_info* college_donate_sort(struct college_info* head);
 struct class_info* class_donate_sort(struct class_info* head);
+struct college_info* sort_donate_all(struct college_info* head);
+//sort by student
 struct college_info* college_student_sort(struct college_info* head);
 struct class_info* class_student_sort(struct class_info* head);
-struct college_info* sort_donate_all(struct college_info* head);
 struct college_info* sort_student_all(struct college_info* head);
 #endif // DONATE_H

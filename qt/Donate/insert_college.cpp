@@ -21,3 +21,8 @@ QString insert_college::get_person_name(){
 QString insert_college::get_phone_number(){
     return ui->phone_number_lineEdit->text();
 }
+void insert_college::Clear(){
+    ui->college_name_lineEdit->clear();;
+    ui->peraon_name_lineEdit->clear();
+    ui->phone_number_lineEdit->clear();
+}

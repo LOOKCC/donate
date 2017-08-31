@@ -14,11 +14,14 @@ class insert_student : public QDialog
 public:
     explicit insert_student(QWidget *parent = 0);
     ~insert_student();
+    //get
     QString get_name();
     QString get_ID();
     QChar get_gender();
     int get_age();
     float get_money();
+    //clear lineedit
+    void Clear();
 private:
     Ui::insert_student *ui;
 };
