@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //create
     connect(ui->createButton,SIGNAL(clicked()),this,SLOT(Create_Show()));//show create_win
     connect(create_college_win,SIGNAL(accepted()),this,SLOT(Create_College()));//if create node is college
-    connect(create_class_win,SIGNAL(accepted()),this,SLOT(Create_College()));//if create node is class
+    connect(create_class_win,SIGNAL(accepted()),this,SLOT(Create_Class()));//if create node is class
     connect(create_student_win,SIGNAL(accepted()),this,SLOT(Create_Student()));//if create node is student
     //search
     connect(ui->searchButton,SIGNAL(clicked()),this,SLOT(Search_Class_show()));//show search_win
