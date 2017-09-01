@@ -577,6 +577,7 @@ void MainWindow::Create_College(){
     QString college_name = create_college_win->get_college_name();
     QString person_name = create_college_win->get_person_name();
     QString phone_number = create_college_win->get_phone_number();
+    create_college_win->Clear();
     //copy information
     struct college_info temp ;
     QByteArray ba1 = college_name.toLatin1();
@@ -596,6 +597,7 @@ void MainWindow::Create_Class(){
     int person_number = create_class_win->get_person_number();
     QString college_name = create_class_win->get_college_name();
     QString counselor = create_class_win->get_counselor();
+    create_class_win->Clear();
     //copy information
     struct class_info temp ;
     QByteArray ba1 = class_ID.toLatin1();
@@ -617,6 +619,7 @@ void MainWindow::Create_Student(){
     QChar gender = create_student_win->get_gender();
     int age = create_student_win->get_age();
     float money = create_student_win->get_money();
+    create_student_win->Clear();
     //copy  information
     struct student_info temp;
     QByteArray ba1 = name.toLatin1();
