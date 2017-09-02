@@ -59,6 +59,7 @@ struct college_info* Insert_student(struct student_info temp_info,struct college
 struct college_info* delete_college(struct college_info* head, int nco);
 struct college_info* delete_class(struct college_info* head, int nco, int ncl);
 struct college_info* delete_student(struct college_info* head, int nco, int ncl,int nst);
+struct college_info* delete_all(struct college_info* head);
 //search
 bool search_CS_class(struct college_info* head,int grade,char* class_ID);
 //length

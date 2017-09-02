@@ -111,6 +111,7 @@ void MainWindow::Load(){
     char college_file[12]= "college.dat";//filename
     char class_file[10] = "class.dat";
     char student_file[12]  = "student.dat";
+    head = delete_all(head);
     if((head = load(head,college_file,class_file,student_file)) != NULL){
         Show_tree();//show information
         QMessageBox::information(NULL,"Information","Load Success",QMessageBox::Ok);//show message load success
@@ -494,8 +495,8 @@ void MainWindow::Ratio(){
             struct class_info* temp_class = temp_college->class_head;
             while(temp_class != NULL){
                 struct student_info* temp_student = temp_class->student_head;
+                total_number[(temp_class->grade)-14] += temp_class->person_number;
                 while(temp_student != NULL){
-                    total_number[(temp_class->grade)-14]++;
                     if(temp_student->money > 0.0f){
                         money_number[(temp_class->grade)-14]++;
                     }
