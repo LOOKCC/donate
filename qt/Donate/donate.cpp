@@ -104,6 +104,7 @@ struct college_info* load(struct college_info* head,char* college_file_name,char
     FILE* college_file = fopen(college_file_name,"rb");//open file to read college_info
     FILE* class_file = fopen(class_file_name,"rb");//open file to read class_info
     FILE* student_file = fopen(student_file_name,"rb");//open file to read student_info
+    struct college_info* college_end = NULL;
     if(!(college_file && class_file && student_file)){//make sure file is open
         return NULL;
     }else{
@@ -112,20 +113,45 @@ struct college_info* load(struct college_info* head,char* college_file_name,char
             if(fread(college_new, sizeof(college_info), 1, college_file) != 1){
                 break;
             }
-            college_new->next = head ;
-            head = college_new;
-            college_new->class_head = NULL;
+            if(college_end == NULL){
+                college_end = college_new;
+                head = college_end;
+                college_new->next = NULL ;
+                college_new->class_head = NULL;
+            }else{
+                college_end->next = college_new;
+                college_end = college_new;
+                college_new->next = NULL ;
+                college_new->class_head = NULL;
+            }
+            struct class_info* class_end = NULL;
             for(int i = 0;i < college_new->total_class;++i){
                 struct class_info* class_new = (struct class_info*)malloc(sizeof(struct class_info));
                 fread(class_new, sizeof(class_info), 1, class_file);
-                class_new->next = college_new->class_head;
-                college_new->class_head = class_new;
-                class_new->student_head = NULL;
+                if(class_end == NULL){
+                    class_end = class_new;
+                    college_new->class_head = class_end;
+                    class_new->next = NULL;
+                    class_new->student_head = NULL;
+                }else{
+                    class_end->next = class_new;
+                    class_end = class_new;
+                    class_new->next = NULL;
+                    class_new->student_head = NULL;
+                }
+                struct student_info* student_end = NULL;
                 for(int j = 0; j < class_new->total_student; ++j){
                     struct student_info* student_new = (struct student_info*)malloc(sizeof(struct student_info));
                     fread(student_new, sizeof(student_info), 1, student_file);
-                    student_new->next = class_new->student_head;
-                    class_new->student_head = student_new;
+                    if(student_end == NULL){
+                        student_end = student_new;
+                        class_new->student_head = student_end;
+                        student_new->next = NULL;
+                    }else{
+                        student_end->next = student_new;
+                        student_end = student_new;
+                        student_new->next = NULL;
+                    }
                 }
             }
         }

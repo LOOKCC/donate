@@ -589,17 +589,20 @@ moc_mainwindow.cpp: ../Donate/donate.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/mainwindow.h -o moc_mainwindow.cpp
 
-moc_change_college.cpp: ../Donate/change_college.h \
+moc_change_college.cpp: ../Donate/donate.h \
+		../Donate/change_college.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/change_college.h -o moc_change_college.cpp
 
-moc_change_class.cpp: ../Donate/change_class.h \
+moc_change_class.cpp: ../Donate/donate.h \
+		../Donate/change_class.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/change_class.h -o moc_change_class.cpp
 
-moc_change_student.cpp: ../Donate/change_student.h \
+moc_change_student.cpp: ../Donate/donate.h \
+		../Donate/change_student.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/wangzhihao/code/keshe/qt/Donate -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include ../Donate/change_student.h -o moc_change_student.cpp
@@ -720,14 +723,17 @@ donate.o: ../Donate/donate.cpp ../Donate/donate.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o donate.o ../Donate/donate.cpp
 
 change_college.o: ../Donate/change_college.cpp ../Donate/change_college.h \
+		../Donate/donate.h \
 		ui_change_college.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o change_college.o ../Donate/change_college.cpp
 
 change_class.o: ../Donate/change_class.cpp ../Donate/change_class.h \
+		../Donate/donate.h \
 		ui_change_class.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o change_class.o ../Donate/change_class.cpp
 
 change_student.o: ../Donate/change_student.cpp ../Donate/change_student.h \
+		../Donate/donate.h \
 		ui_change_student.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o change_student.o ../Donate/change_student.cpp
 

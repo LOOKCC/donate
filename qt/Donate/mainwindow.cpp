@@ -13,10 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
 // tableWidget settings
     ui->tableWidget->setColumnCount(2);
     ui->tableWidget->setRowCount(5);
-    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "                    " <<"                    ");
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "item" <<"information");
     ui->tableWidget->verticalHeader()->setVisible(false);//hide vertical header
     ui->tableWidget->setColumnWidth(0,100);
-    ui->tableWidget->setColumnWidth(1,100);
+    ui->tableWidget->setColumnWidth(1,150);
 //global list initialization
     head = NULL;
 //set mouse position none
@@ -468,6 +468,7 @@ void MainWindow::Sort_donate(){
     Show_tree();
 }
 void MainWindow::More_than(){
+    more_win->clear();
     struct college_info* temp_college = head;
     while(temp_college != NULL){//Traversal list
         struct class_info* temp_class = temp_college->class_head;

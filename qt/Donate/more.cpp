@@ -23,3 +23,7 @@ void more::Add_info(QString name, QString money){
     ui->tableWidget->setItem(row,0,new QTableWidgetItem(name));
     ui->tableWidget->setItem(row,1,new QTableWidgetItem(money));
 }
+void more::clear(){
+    ui->tableWidget->clear();
+    ui->tableWidget->setRowCount(0);
+}
