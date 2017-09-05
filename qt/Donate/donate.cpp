@@ -380,7 +380,7 @@ struct college_info* delete_student(struct college_info* head, int nco, int ncl,
 struct college_info* delete_all(struct college_info* head){
     int n = college_length(head);
     for(int i = 0; i < n; ++i){
-        delete_college(head,0);
+        head = delete_college(head,0);
     }
     return NULL;
 }
@@ -397,9 +397,7 @@ bool search_CS_class(struct college_info* head,int grade,char* class_ID){
                 temp_class = temp_class->next;
             }
         }
-        else{
-            temp_college = temp_college->next;
-        }
+        temp_college = temp_college->next;
     }
     return false;
 }
